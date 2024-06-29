@@ -25,7 +25,7 @@ class LocationController extends Controller
             $employeeLatitude,
             $employeeLongitude
         );
-        dd($distance);
+        
         if ($distance <= 50) {
             return response()->json(['message' => 'Within range'], 200);
         } else {
