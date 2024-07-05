@@ -24,8 +24,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'office_id' => ['required', 'exists:offices,id'],
             'name' => ['required', 'string', 'max:255'],
             'nip' => ['required', 'string', 'max:255', 'unique:users'],
+            'photo' => ['required', 'string', 'max:255'],
+            'rank' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
     }

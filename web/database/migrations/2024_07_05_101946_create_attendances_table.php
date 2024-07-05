@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('latitude');
             $table->string('longitude');
             $table->enum('type', ['in', 'out']);
-            $table->enum('status', ['late', 'ontime', 'toofast']);
+            $table->enum('status', ['late', 'ontime', 'early']);
             $table->string('deviation')->nullable();
             $table->timestamps();
         });

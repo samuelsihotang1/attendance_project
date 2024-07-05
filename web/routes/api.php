@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\Api\Auth\ApiAuthenticationController;
+use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\Api\FeedController;
 use App\Http\Controllers\Api\LocationController;
-use App\Http\Controllers\Feed\FeedController;
 use Illuminate\Support\Facades\Route;
 
 // Authenticate
-Route::post('/register', [ApiAuthenticationController::class, 'register']);
-Route::post('/login', [ApiAuthenticationController::class, 'login']);
+Route::post('/register', [AuthenticationController::class, 'register']);
+Route::post('/login', [AuthenticationController::class, 'login']);
 
 // Agar harus authorize dengan token, gunakan middleware 'auth:sanctum'
 Route::middleware('auth:sanctum')->group(function () {

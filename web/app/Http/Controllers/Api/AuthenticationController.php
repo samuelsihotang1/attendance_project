@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Auth;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
@@ -8,14 +8,17 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class ApiAuthenticationController extends Controller
+class AuthenticationController extends Controller
 {
     public function register(RegisterRequest $request)
     {
         // Contoh JSON
         // {
-        //     "name": "Samuel",
-        //     "nip": "12S21041",
+        //     "office_id": "1",
+        //     "name": "Administrator",
+        //     "nip": "12345",
+        //     "photo": "photo1.jpg",
+        //     "rank": "Administrator",
         //     "password": "inipassword",
         //     "password_confirmation": "inipassword"
         // }
@@ -23,8 +26,11 @@ class ApiAuthenticationController extends Controller
         $request->validated();
 
         $userData = [
+            'office_id' => $request->office_id,
             'name' => $request->name,
             'nip' => $request->nip,
+            'photo' => $request->photo,
+            'rank' => $request->rank,
             'password' => Hash::make($request->password)
         ];
 
@@ -43,7 +49,7 @@ class ApiAuthenticationController extends Controller
     {
         // Contoh JSON
         // {
-        //     "nip": "12S21041",
+        //     "nip": "12345",
         //     "password": "inipassword",
         //     "password_confirmation": "inipassword"
         // }
