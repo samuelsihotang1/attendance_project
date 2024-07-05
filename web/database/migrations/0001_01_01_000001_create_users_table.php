@@ -12,9 +12,12 @@ return new class extends Migration {
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('office_id');
+            $table->foreign('office_id')->references('id')->on('offices');
             $table->string('name');
             $table->string('nip')->unique();
-            $table->string('photo')->nullable();
+            $table->string('photo');
+            $table->string('rank');
             $table->string('password');
             $table->timestamps();
         });

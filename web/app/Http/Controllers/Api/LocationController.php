@@ -1,13 +1,19 @@
 <?php
 namespace App\Http\Controllers\Api;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CheckLocationRequest;
 use App\Http\Controllers\Controller;
 
 class LocationController extends Controller
 {
-    public function checkLocation(Request $request)
+    public function checkLocation(CheckLocationRequest $request)
     {
+        // Contoh JSON
+        // {
+        //     "latitude": "2.383212446907558",
+        //     "longitude": "99.14864718342184"
+        // }
+
         $request->validate([
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',

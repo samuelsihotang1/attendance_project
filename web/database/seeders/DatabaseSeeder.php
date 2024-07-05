@@ -15,10 +15,10 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Admin',
-            'nip' => 'admin',
-            'password' => bcrypt('admin'),
-        ]);
+        // User::factory()->create([
+        //     'name' => 'Admin',
+        //     'nip' => 'admin',
+        //     'password' => bcrypt('admin'),
+        // ]);
     }
 }
