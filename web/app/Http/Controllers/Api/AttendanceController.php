@@ -15,7 +15,7 @@ class AttendanceController extends Controller
         // Contoh JSON
         // {
         //     "latitude": "34.052235",
-        //     "longitude": "-118.243683",
+        //     "longitude": "118.243683",
         //     "type": "out",
         //     "status": "late",
         //     "deviation": 1800

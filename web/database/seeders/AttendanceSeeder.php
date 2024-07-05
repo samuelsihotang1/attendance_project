@@ -16,33 +16,33 @@ class AttendanceSeeder extends Seeder
         $datas = [
             [
                 'latitude' => '40.712776',
-                'longitude' => '-74.005974',
+                'longitude' => '74.005974',
                 'type' => 'in',
                 'status' => 'ontime',
             ],
             [
                 'latitude' => '34.052235',
-                'longitude' => '-118.243683',
+                'longitude' => '118.243683',
                 'type' => 'out',
                 'status' => 'late',
                 'deviation' => 1800,
             ],
             [
                 'latitude' => '41.878113',
-                'longitude' => '-87.629799',
+                'longitude' => '87.629799',
                 'type' => 'in',
                 'status' => 'ontime',
             ],
             [
                 'latitude' => '37.774929',
-                'longitude' => '-122.419418',
+                'longitude' => '122.419418',
                 'type' => 'out',
                 'status' => 'early',
                 'deviation' => 3600,
             ],
             [
                 'latitude' => '51.507351',
-                'longitude' => '-0.127758',
+                'longitude' => '0.127758',
                 'type' => 'in',
                 'status' => 'late',
                 'deviation' => 300,
