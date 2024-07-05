@@ -1,7 +1,8 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LocationController extends Controller
 {
@@ -25,7 +26,9 @@ class LocationController extends Controller
             $employeeLatitude,
             $employeeLongitude
         );
-        
+
+        // Delete this
+        return response()->json(['message' => $distance], 200);
         if ($distance <= 50) {
             return response()->json(['message' => 'Within range'], 200);
         } else {

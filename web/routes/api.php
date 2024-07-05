@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\ApiAuthenticationController;
+use App\Http\Controllers\Api\LocationController;
 use App\Http\Controllers\Feed\FeedController;
-use App\Http\Controllers\LocationController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
