@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth\Api;
+namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
@@ -14,19 +14,17 @@ class ApiAuthenticationController extends Controller
     {
         // Contoh JSON
         // {
-        //     "name": "Jo",
-        //     "username": "joshndssosse1232s",
-        //     "email": "johnsdoe@sesxasmsplse.co2m",
-        //     "password": "0001234567",
-        //     "password_confirmation": "0001234567"
+        //     "name": "Samuel",
+        //     "nip": "12S21041",
+        //     "password": "inipassword",
+        //     "password_confirmation": "inipassword"
         // }
 
         $request->validated();
 
         $userData = [
             'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
+            'nip' => $request->nip,
             'password' => Hash::make($request->password)
         ];
 
@@ -45,14 +43,14 @@ class ApiAuthenticationController extends Controller
     {
         // Contoh JSON
         // {
-        //     "username": "joshndssosse1232s",
-        //     "password": "0001234567",
-        //     "password_confirmation": "0001234567"
+        //     "nip": "12S21041",
+        //     "password": "inipassword",
+        //     "password_confirmation": "inipassword"
         // }
 
         $request->validated();
 
-        $user = User::whereUsername($request->username)->first();
+        $user = User::whereNip($request->nip)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => 'The provided credentials are incorrect.'
