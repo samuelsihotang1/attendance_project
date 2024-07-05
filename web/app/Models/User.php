@@ -49,13 +49,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function feeds(): HasMany
-    {
-        return $this->hasMany(Feed::class);
-    }
-
     public function office(): BelongsTo
     {
         return $this->belongsTo(Office::class);
+    }
+
+    public function attendances(): HasMany
+    {
+        return $this->hasMany(Attendance::class);
     }
 }

@@ -56,7 +56,7 @@ class AuthenticationController extends Controller
 
         $request->validated();
 
-        $user = User::whereNip($request->nip)->first();
+        $user = User::whereNip($request->nip)->with('office')->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
                 'message' => 'The provided credentials are incorrect.'

@@ -1,8 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AnnouncementController;
+use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\FeedController;
-use App\Http\Controllers\Api\LocationController;
 use Illuminate\Support\Facades\Route;
 
 // Authenticate
@@ -11,6 +12,14 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 
 // Agar harus authorize dengan token, gunakan middleware 'auth:sanctum'
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/feed/store', [FeedController::class, 'store']);
-    Route::post('/checklocation', [LocationController::class, 'checkLocation']);
+    // Attendance
+    Route::get('/attendance/today', [AttendanceController::class, 'getTodayData']);
+    Route::get('/attendance/few', [AttendanceController::class, 'getFewData']);
+    Route::get('/attendance/all', [AttendanceController::class, 'getAllData']);
+    Route::post('/attendance/checklocation', [AttendanceController::class, 'checkLocation']);
+    Route::post('/attendance/store', [AttendanceController::class, 'store']);
+
+    // Announcement
+    Route::get('/announcement/few', [AnnouncementController::class, 'getFewData']);
+    Route::get('/announcement/all', [AnnouncementController::class, 'getAllData']);
 });
