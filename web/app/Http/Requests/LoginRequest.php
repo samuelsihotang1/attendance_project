@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'nip' => ['required', 'string', 'exists:users,nip', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
+            'password' => ['required', 'string', 'min:8', 'max:255'],
         ];
     }
 

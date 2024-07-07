@@ -51,7 +51,6 @@ class AuthenticationController extends Controller
         // {
         //     "nip": "12345",
         //     "password": "inipassword",
-        //     "password_confirmation": "inipassword"
         // }
 
         $request->validated();
