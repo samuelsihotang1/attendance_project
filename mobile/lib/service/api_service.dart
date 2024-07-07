@@ -48,7 +48,7 @@ class ApiService {
 
       return loginResponse;
     }else {
-      throw Exception('Gagal login. Status code: ${response.statusCode}');
+      throw Exception('Status code: ${response.statusCode}');
     }
   }
 }
