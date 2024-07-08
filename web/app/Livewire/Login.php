@@ -20,7 +20,7 @@ class Login extends Component
 
     public function render()
     {
-        return view('auth.login');
+        return view('auth.login')->title("Login ");
     }
 
     public function login()
@@ -49,7 +49,6 @@ class Login extends Component
             return redirect()->intended('/');
         }
     }
-
 
     public function logout(Request $request)
     {
