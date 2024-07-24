@@ -57,6 +57,11 @@ class ApiService {
 
   Future<AnnouncementResponse> getAllAnnouncement() async {
     var url = Uri.parse('${Config.API_URL}${Config.getAllAnnouncement}');
+
+    if (token.isEmpty) {
+      await _loadToken();
+    }
+
     try {
       var response = await client.get(
           url,
@@ -68,7 +73,6 @@ class ApiService {
 
       print('Status code: ${response.statusCode}');
       print('Response body: ${response.body}');
-
       print('Making request to $url with token: $token');
 
       if (response.statusCode == 200) {

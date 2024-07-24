@@ -12,14 +12,14 @@ class AnnouncementResponse {
   factory AnnouncementResponse.fromJson(Map<String, dynamic> json) {
     return AnnouncementResponse(
       success: json['success'],
-      data: List<Announcement>.from(json["Data"].map((x) => Announcement.fromJson(x))),
+      data: List<Announcement>.from(json["data"].map((x) => Announcement.fromJson(x))),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'success': success,
-      'Data': List<dynamic>.from(data.map((x) => x.toJson())),
+      'data': List<dynamic>.from(data.map((x) => x.toJson())),
     };
   }
 }

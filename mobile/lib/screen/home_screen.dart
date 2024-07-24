@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 color: Colors.white,
                 child: const Column(
                   children: [
@@ -55,9 +55,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 color: Colors.white,
                 child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -85,24 +85,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 10),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 color: Colors.white,
                 child: Row(
                   children: [
                     Expanded(
                       child: ElevatedButton.icon(
                         onPressed: () {},
-                        icon: Icon(Icons.login),
-                        label: Text('Masuk'),
+                        icon: const Icon(Icons.login),
+                        label: const Text('Masuk'),
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Expanded(
                       child: ElevatedButton.icon(
                         onPressed: () {},
-                        icon: Icon(Icons.logout),
-                        label: Text('Keluar'),
+                        icon: const Icon(Icons.logout),
+                        label: const Text('Keluar'),
                         style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                       ),
                     ),
@@ -113,10 +113,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 padding: const EdgeInsets.all(16),
                 color: Colors.white,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Attendance', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    TextButton(
+                      child: Text(
+                        "View All",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      onPressed: (){
+                        Navigator.of(context).pushNamed("/announcement");
+                      },
+                    ),
                     SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
