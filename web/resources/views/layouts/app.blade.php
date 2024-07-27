@@ -54,11 +54,15 @@
                         <label>Menu</label>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
-                        <a href="/" class="nxl-link">
+                        <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                            <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"><i
+                            <span class="nxl-mtext">Halaman Utama</span><span class="nxl-arrow"><i
                                     class="feather-chevron-right"></i></span>
                         </a>
+                        <ul class="nxl-submenu">
+                            <li class="nxl-item"><a class="nxl-link" href="/">Absen Masuk</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="/out">Absen Pulang</a></li>
+                        </ul>
                     </li>
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
@@ -123,7 +127,7 @@
                         </a>
                     </div>
                     <div class="dropdown nxl-h-item nxl-mega-menu">
-                        <a href="/" class="btn btn-light-brand">
+                        <a href="{{url()->current()}}" class="btn btn-light-brand">
                             {{$title ?? 'Page'}} </a>
                     </div>
                     <!--! [Start] nxl-lavel-mega-menu-wrapper !-->

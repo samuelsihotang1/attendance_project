@@ -8,7 +8,7 @@
                     <div class="col-xxl-3 col-md-6">
                         <div class="card stretch stretch-full">
                             <div class="card-header">
-                                <h5 class="card-title">Karyawan yang masuk hari ini - {{ $this->presentUsers->count() }}/{{
+                                <h5 class="card-title">Karyawan yang sudah pulang hari ini - {{ $this->presentUsers->count() }}/{{
                                     $this->presentUsers->count() + $this->absentUsers->count() }}</h5>
                                 <div class="card-header-action">
                                     <div class="dropdown">
@@ -49,13 +49,13 @@
                                                         </a>
                                                     </div>
                                                 </td>
-                                                <td> {{ $user->attendancesInToday[0]->created_at->format('H:i') }}</td>
+                                                <td> {{ $user->attendancesOutToday[0]->created_at->format('H:i') }}</td>
                                                 <td>
-                                                    @if ($user->attendancesInToday[0]->status == 'ontime')
+                                                    @if ($user->attendancesOutToday[0]->status == 'ontime')
                                                     <span class="badge bg-soft-success text-success">
                                                         Tepat Waktu
                                                     </span>
-                                                    @elseif($user->attendancesInToday[0]->status == 'late')
+                                                    @elseif($user->attendancesOutToday[0]->status == 'late')
                                                     <span class="badge bg-soft-warning text-danger">
                                                         Terlambat
                                                     </span>
@@ -67,7 +67,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex justify-content-center align-items-center gap-3">
-                                                        <span class="d-block">Semuanya hadir</span>
+                                                        <span class="d-block">Belum ada yang pulang</span>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -84,7 +84,7 @@
                     <div class="col-xxl-3 col-md-6">
                         <div class="card stretch stretch-full">
                             <div class="card-header">
-                                <h5 class="card-title">Tidak masuk - {{ $this->absentUsers->count() }}/{{
+                                <h5 class="card-title">Belum pulang - {{ $this->absentUsers->count() }}/{{
                                     $this->absentUsers->count() + $this->presentUsers->count() }}</h5>
                                 <div class="card-header-action">
                                     <div class="dropdown">
@@ -129,7 +129,7 @@
                                             <tr>
                                                 <td>
                                                     <div class="d-flex justify-content-center align-items-center gap-3">
-                                                        <span class="d-block">Tidak ada yang hadir</span>
+                                                        <span class="d-block">Semuanya sudah pulang</span>
                                                     </div>
                                                 </td>
                                             </tr>

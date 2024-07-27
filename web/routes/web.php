@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\DashboardCheckIn;
+use App\Livewire\DashboardCheckOut;
 use App\Livewire\Login;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
         }
     );
     Route::get('/', DashboardCheckIn::class);
+    Route::get('/out', DashboardCheckOut::class);
 });
 
 Route::get('/test', [DashboardCheckIn::class, 'getUsers']);

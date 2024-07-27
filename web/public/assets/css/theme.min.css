@@ -2511,7 +2511,7 @@ html.minimenu .nxl-header {
     .nxl-hasmenu.nxl-trigger
     > .nxl-link
     > .nxl-arrow {
-    transform: rotate(0deg);
+    transform: rotate(90deg);
 }
 .nxl-navigation .navbar-content .card {
     margin: 20px;

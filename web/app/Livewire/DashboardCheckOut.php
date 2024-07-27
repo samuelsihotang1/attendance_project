@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class DashboardCheckIn extends Component
+class DashboardCheckOut extends Component
 {
     protected $presentUsers;
     protected $absentUsers;
@@ -23,19 +23,19 @@ class DashboardCheckIn extends Component
 
     public function render()
     {
-        return view('dashboard_check_in')->title("Absen Masuk");
+        return view('dashboard_check_out')->title("Absen Pulang");
     }
 
     protected function getUsers()
     {
-        $users = User::where('office_id', Auth::user()->office_id)->with('attendancesInToday')->get();
+        $users = User::where('office_id', Auth::user()->office_id)->with('attendancesOutToday')->get();
 
         $this->presentUsers = $users->filter(function ($user) {
-            return !$user->attendancesInToday->isEmpty();
+            return !$user->attendancesOutToday->isEmpty();
         });
 
         $this->absentUsers = $users->filter(function ($user) {
-            return $user->attendancesInToday->isEmpty();
+            return $user->attendancesOutToday->isEmpty();
         });
     }
 }
