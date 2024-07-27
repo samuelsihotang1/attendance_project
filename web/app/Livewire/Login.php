@@ -20,7 +20,7 @@ class Login extends Component
 
     public function render()
     {
-        return view('auth.login')->title("Login ");
+        return view('auth.login')->title("Login");
     }
 
     public function login()
@@ -36,6 +36,11 @@ class Login extends Component
 
         if (!$user) {
             $this->addError('nip', 'NIP yang anda input tidak terdaftar.');
+            return;
+        }
+
+        if ($user->role != 'admin') {
+            $this->addError('nip', 'Hanya admin yang bisa login.');
             return;
         }
 
