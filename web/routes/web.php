@@ -1,8 +1,8 @@
 <?php
 
-use App\Livewire\DashboardCheckIn;
-use App\Livewire\DashboardCheckOut;
-use App\Livewire\Login;
+use App\Livewire\Dashboard\DashboardCheckIn;
+use App\Livewire\Dashboard\DashboardCheckOut;
+use App\Livewire\Auth\Login;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
