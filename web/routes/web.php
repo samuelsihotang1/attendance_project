@@ -11,14 +11,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [Login::class, 'logout'])->name('logout');
-    Route::get(
-        '/welcome',
-        function () {
-            return view('welcome');
-        }
-    );
     Route::get('/', DashboardCheckIn::class);
     Route::get('/out', DashboardCheckOut::class);
 });
 
-Route::get('/test', [DashboardCheckIn::class, 'getUsers']);
+// Route::get('/test', [DashboardCheckIn::class, 'getUsers']);
