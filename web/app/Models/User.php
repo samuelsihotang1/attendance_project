@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -56,5 +57,21 @@ class User extends Authenticatable
     public function attendances(): HasMany
     {
         return $this->hasMany(Attendance::class);
+    }
+
+    public function attendancesInToday(): HasMany
+    {
+        return $this->hasMany(Attendance::class)
+            ->where('created_at', '>=', Carbon::today()->startOfDay())
+            ->where('created_at', '<=', Carbon::today()->endOfDay())
+            ->where('type', 'in');
+    }
+
+    public function attendancesOutToday(): HasMany
+    {
+        return $this->hasMany(Attendance::class)
+            ->where('created_at', '>=', Carbon::today()->startOfDay())
+            ->where('created_at', '<=', Carbon::today()->endOfDay())
+            ->where('type', 'out');
     }
 }

@@ -1,20 +1,22 @@
 <?php
 
-use App\Http\Controllers\AuthenticationController;
-use App\Livewire\Homepage;
+use App\Livewire\DashboardCheckIn;
 use App\Livewire\Login;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Counter;
 
-Route::get('/login', Login::class)->name('login');
-Route::post('/logout', [Login::class, 'logout'])->name('logout');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', Login::class)->name('login');
+});
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [Login::class, 'logout'])->name('logout');
     Route::get(
         '/welcome',
         function () {
             return view('welcome');
         }
     );
-    Route::get('/', Homepage::class);
+    Route::get('/', DashboardCheckIn::class);
 });
+
+Route::get('/test', [DashboardCheckIn::class, 'getUsers']);

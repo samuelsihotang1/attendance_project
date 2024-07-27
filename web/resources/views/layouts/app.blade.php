@@ -44,7 +44,7 @@
                 <a href="/" class="b-brand">
                     <!-- ========   change your logo hear   ============ -->
                     <img src="assets/images/logo-full.png" alt="" class="logo logo-lg"
-                        style="height: 10vh; filter: none;" />
+                        style="height: 60px; filter: none;" />
                     <img src="assets/images/logo-abbr.png" alt="" class="logo logo-sm" style="filter: none;" />
                 </a>
             </div>
