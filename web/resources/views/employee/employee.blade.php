@@ -62,7 +62,7 @@
                                         @foreach ($this->users as $user)
                                         <tr wire:key="{{$user->id}}" class="single-item">
                                             <td>
-                                                <a href="customers-view.html" class="hstack gap-3">
+                                                <a href="{{url('employee/view/' . $user->nip)}}" class="hstack gap-3">
                                                     <div class="avatar-image avatar-md">
                                                         <img src="{{url('assets/images/avatar/' . $user->photo)}}"
                                                             alt="" class="img-fluid">
@@ -76,7 +76,8 @@
                                             <td>{{$user->rank}}</td>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
-                                                    <a href="customers-view.html" class="avatar-text avatar-md">
+                                                    <a href="{{url('employee/view/' . $user->nip)}}"
+                                                        class="avatar-text avatar-md">
                                                         <i class="feather feather-eye"></i>
                                                     </a>
                                                     <div class="dropdown">

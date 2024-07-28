@@ -74,7 +74,7 @@ class Create extends Component
             'rank' => $this->rank,
             'password' => $this->password,
             'office_id' => $this->office_id,
-            'photo' => $this->nip
+            'photo' => $nip . '.' . $this->photo->extension()
         ]);
 
         return redirect()->route('employee');
