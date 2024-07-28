@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/screen/announcement_screen.dart';
 import 'package:mobile/screen/home_screen.dart';
 import 'package:mobile/screen/login_screen.dart';
+import 'package:mobile/screen/take_photo_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home' : (context) => const HomeScreen(),
         '/announcement': (context) => const AnnouncementScreen(),
+        '/take-photo': (context) => const TakePhotoScreen(),
       },
     );
   }

@@ -203,7 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   Expanded(
                                     child: ElevatedButton.icon(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pushNamed(context, '/take-photo');
+                                      },
                                       icon: const Icon(Icons.login, color: Colors.white),
                                       label: const Text('Masuk', style: TextStyle(color: Colors.white)),
                                       style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
