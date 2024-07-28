@@ -37,7 +37,7 @@ class AttendanceSeeder extends Seeder
                 'latitude' => '37.774929',
                 'longitude' => '122.419418',
                 'type' => 'out',
-                'status' => 'early',
+                'status' => 'ontime',
                 'deviation' => 3600,
             ],
             [

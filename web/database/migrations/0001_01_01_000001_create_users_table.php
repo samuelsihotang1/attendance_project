@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('photo');
             $table->string('rank');
             $table->string('password');
+            $table->enum('role', ['admin', 'user'])->default('user');
             $table->timestamps();
         });
 

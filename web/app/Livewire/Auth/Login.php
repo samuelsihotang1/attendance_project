@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +20,7 @@ class Login extends Component
 
     public function render()
     {
-        return view('auth.login')->title("Login ");
+        return view('auth.login')->title("Login");
     }
 
     public function login()
@@ -39,6 +39,11 @@ class Login extends Component
             return;
         }
 
+        if ($user->role != 'admin') {
+            $this->addError('nip', 'Hanya admin yang bisa login.');
+            return;
+        }
+
         if (!Hash::check($this->password, $user->password)) {
             $this->addError('password', 'Password yang anda input tidak sesuai.');
             return;
@@ -52,7 +57,7 @@ class Login extends Component
 
     public function logout(Request $request)
     {
-        Auth::logout();
+        Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect('/login');
