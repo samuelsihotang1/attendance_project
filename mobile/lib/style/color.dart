@@ -7,4 +7,5 @@ class AppColors {
   static const Color textColor = Color(0xFF000000);
   static const Color errorColor = Color(0xFFB00020);
   static const Color buttonColor = Color(0xFF6200EE);
+  static const Color cardLoc = Color(0xFFEEEEEE);
 }

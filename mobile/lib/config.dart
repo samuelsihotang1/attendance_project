@@ -3,4 +3,5 @@ class Config {
 
   static const String login = "/login";
   static const String getAllAnnouncement = "/announcement/all";
+  static const String getFewAnnouncement = "/announcement/few";
 }

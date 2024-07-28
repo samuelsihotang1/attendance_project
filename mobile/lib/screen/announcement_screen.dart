@@ -4,6 +4,7 @@ import 'package:mobile/service/api_service.dart';
 
 import '../model/announcement.dart';
 import '../model/announcement_response.dart';
+import 'package:mobile/style/color.dart';
 
 class AnnouncementScreen extends StatefulWidget {
   const AnnouncementScreen({super.key});
@@ -34,12 +35,43 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
           : announcements.isEmpty
           ? const Center(child: Text('Tidak ada pengumuman'))
           : ListView.builder(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: announcements.length,
         itemBuilder: (context, index) {
-          final announcement = announcements[index];
-          return ListTile(
-            title: Text(announcement.title),
-            subtitle: Text(announcement.content),
+          return Container(
+            width: MediaQuery.sizeOf(context).width,
+            margin: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              border: Border.all(color: AppColors.cardLoc),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    announcements[index].title,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    announcements[index].content,
+                    style: const TextStyle(fontSize: 16,),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ),

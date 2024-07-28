@@ -87,4 +87,37 @@ class ApiService {
       throw Exception('Error fetching announcements: $e');
     }
   }
+
+  Future<AnnouncementResponse> getFewAnnouncement() async {
+    var url = Uri.parse('${Config.API_URL}${Config.getFewAnnouncement}');
+
+    if (token.isEmpty) {
+      await _loadToken();
+    }
+
+    try {
+      var response = await client.get(
+          url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          }
+      );
+
+      print('Status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+      print('Making request to $url with token: $token');
+
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        var announcementResponse = AnnouncementResponse.fromJson(jsonResponse);
+        return announcementResponse;
+      } else {
+        throw Exception('Failed to load announcements. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching announcements: $e');
+      throw Exception('Error fetching announcements: $e');
+    }
+  }
 }
