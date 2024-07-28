@@ -18,8 +18,13 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <input type="password" wire:model="password" class="form-control" placeholder="Password"
-                                    autocomplete="current-password" required>
+                                <div class="input-group">
+                                    <input id="passwordInput" type="password" wire:model="password" class="form-control"
+                                        placeholder="Password" autocomplete="current-password" required>
+                                    <button type="button" class="input-group-text" id="togglePassword">
+                                        <i id="eyeIcon" class="feather feather-eye-off"></i>
+                                    </button>
+                                </div>
                                 @error('password')
                                 <span role="alert">{{ $message }}</span>
                                 @enderror
@@ -34,3 +39,21 @@
         </div>
     </main>
 </div>
+
+@push('scripts')
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        var passwordInput = document.getElementById('passwordInput');
+        var eyeIcon = document.getElementById('eyeIcon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('feather-eye-off');
+            eyeIcon.classList.add('feather-eye');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('feather-eye');
+            eyeIcon.classList.add('feather-eye-off');
+        }
+    });
+</script>
+@endpush
