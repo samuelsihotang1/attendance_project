@@ -154,13 +154,34 @@
     <script src="{{url('assets/js/dashboard-init.min.js')}}"></script>
 </div>
 
-<x-slot:scripts>
-    <script src="{{url('assets/vendors/js/daterangepicker.min.js')}}"></script>
-    <script src="{{url('assets/vendors/js/apexcharts.min.js')}}"></script>
-    <script src="{{url('assets/vendors/js/circle-progress.min.js')}}"></script>
-    <script src="{{url('assets/js/dashboard-init.min.js')}}"></script>
-    </x-slot>
+@push('scripts')
+<script>
+    document.addEventListener('contentChanged', function(e) {
+        loadScripts().then(function() {
+            window.livewire.emit('scriptsLoaded');
+        });
+    });
 
-    <x-slot:assets>
-        <link rel="stylesheet" type="text/css" href="assets/vendors/css/daterangepicker.min.css" />
-        </x-slot>
+    function loadScripts() {
+        return new Promise((resolve, reject) => {
+            $.getScript("{{url('assets/vendors/js/daterangepicker.min.js')}}", function() {
+                $.getScript("{{url('assets/vendors/js/apexcharts.min.js')}}", function() {
+                    $.getScript("{{url('assets/vendors/js/circle-progress.min.js')}}", function() {
+                        $.getScript("{{url('assets/js/dashboard-init.min.js')}}", function() {
+                            resolve();
+                        }).fail(reject);
+                    }).fail(reject);
+                }).fail(reject);
+            }).fail(reject);
+        });
+    }
+
+    loadScripts().then(function() {
+        window.livewire.emit('scriptsLoaded');
+    });
+</script>
+@endpush
+
+@push('styles')
+<link rel="stylesheet" type="text/css" href="{{url('assets/vendors/css/daterangepicker.min.css')}}" />
+@endpush

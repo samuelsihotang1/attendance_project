@@ -34,4 +34,9 @@ class DashboardCheckIn extends Component
             return $user->attendancesInToday->isEmpty();
         });
     }
+
+    public function hydrate()
+    {
+        $this->dispatch('contentChanged');
+    }
 }

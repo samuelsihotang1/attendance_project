@@ -34,4 +34,9 @@ class DashboardCheckOut extends Component
             return $user->attendancesOutToday->isEmpty();
         });
     }
+
+    public function hydrate()
+    {
+        $this->dispatch('contentChanged');
+    }
 }
