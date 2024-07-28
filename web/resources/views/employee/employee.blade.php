@@ -60,7 +60,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($this->users as $user)
-                                        <tr class="single-item">
+                                        <tr wire:key="{{$user->id}}" class="single-item">
                                             <td>
                                                 <a href="customers-view.html" class="hstack gap-3">
                                                     <div class="avatar-image avatar-md">
@@ -92,7 +92,9 @@
                                                             </li>
                                                             <li class="dropdown-divider"></li>
                                                             <li>
-                                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                                <a wire:click="deleteUser({{$user->id}})"
+                                                                    wire:confirm="Apakah kamu yakin ingin menghapus akun {{$user->name}}?"
+                                                                    class="dropdown-item" href="javascript:void(0)">
                                                                     <i class="feather feather-trash-2 me-3"></i>
                                                                     <span>Delete</span>
                                                                 </a>
@@ -115,16 +117,38 @@
     </div>
 </div>
 
-<x-slot:scripts>
-    <script src="{{url('assets/vendors/js/dataTables.min.js')}}"></script>
-    <script src="{{url('assets/vendors/js/dataTables.bs5.min.js')}}"></script>
-    <script src="{{url('assets/vendors/js/select2.min.js')}}"></script>
-    <script src="{{url('assets/vendors/js/select2-active.min.js')}}"></script>
-    <script src="{{url('assets/js/customers-init.min.js')}}"></script>
-    </x-slot>
+@push('scripts')
+<script>
+    document.addEventListener('contentChanged', function(e) {
+        loadScripts().then(function() {
+            window.livewire.emit('scriptsLoaded');
+        });
+    });
 
-    <x-slot:assets>
-        <link rel="stylesheet" type="text/css" href="assets/vendors/css/dataTables.bs5.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/vendors/css/select2.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/vendors/css/select2-theme.min.css">
-        </x-slot>
+    function loadScripts() {
+        return new Promise((resolve, reject) => {
+            $.getScript("{{url('assets/vendors/js/dataTables.min.js')}}", function() {
+                $.getScript("{{url('assets/vendors/js/dataTables.bs5.min.js')}}", function() {
+                    $.getScript("{{url('assets/vendors/js/select2.min.js')}}", function() {
+                        $.getScript("{{url('assets/vendors/js/select2-active.min.js')}}", function() {
+                            $.getScript("{{url('assets/js/customers-init.min.js')}}", function() {
+                                resolve();
+                            }).fail(reject);
+                        }).fail(reject);
+                    }).fail(reject);
+                }).fail(reject);
+            }).fail(reject);
+        });
+    }
+
+    loadScripts().then(function() {
+        window.livewire.emit('scriptsLoaded');
+    });
+</script>
+@endpush
+
+@push('styles')
+<link rel="stylesheet" type="text/css" href="{{url('assets/vendors/css/dataTables.bs5.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url('assets/vendors/css/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{url('assets/vendors/css/select2-theme.min.css')}}">
+@endpush

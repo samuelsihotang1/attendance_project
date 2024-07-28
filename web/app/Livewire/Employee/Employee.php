@@ -6,12 +6,9 @@ use App\Models\Office;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Livewire\WithPagination;
 
 class Employee extends Component
 {
-    use WithPagination;
-
     protected $users;
     protected $offices;
     protected $my_office;
@@ -20,7 +17,6 @@ class Employee extends Component
     public function mount()
     {
         $this->office_id = Auth::user()->office_id;
-        $this->getData();
     }
 
     public function getData()
@@ -36,6 +32,11 @@ class Employee extends Component
         return view('employee.employee')->title("Pegawai");
     }
 
+    public function hydrate()
+    {
+        $this->dispatch('contentChanged');
+    }
+
     protected function getMyOffice()
     {
         $this->my_office = Office::where('id', $this->office_id)->first();
@@ -43,7 +44,7 @@ class Employee extends Component
 
     protected function getUsers()
     {
-        $this->users = User::where('office_id', $this->office_id)->paginate(1);
+        $this->users = User::where('office_id', $this->office_id)->get();
     }
 
     protected function getOffices()
@@ -54,5 +55,10 @@ class Employee extends Component
     public function setOffice($id)
     {
         $this->office_id = $id;
+    }
+
+    public function deleteUser($user_id)
+    {
+        User::destroy($user_id);
     }
 }
