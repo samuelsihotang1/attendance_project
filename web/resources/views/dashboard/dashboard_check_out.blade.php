@@ -13,7 +13,7 @@
                             <div class="card-header-action">
                                 <div class="dropdown">
                                     <div data-bs-toggle="tooltip" title="Refresh">
-                                        <a wire:click="$refresh" href="javascript:void(0);"
+                                        <a wire:click="getData" href="javascript:void(0);"
                                             class="avatar-text avatar-xs bg-warning"> </a>
                                     </div>
                                 </div>
@@ -92,7 +92,7 @@
                             <div class="card-header-action">
                                 <div class="dropdown">
                                     <div data-bs-toggle="tooltip" title="Refresh">
-                                        <a wire:click="$refresh" href="javascript:void(0);"
+                                        <a wire:click="getData" href="javascript:void(0);"
                                             class="avatar-text avatar-xs bg-warning"> </a>
                                     </div>
                                 </div>
