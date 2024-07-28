@@ -157,9 +157,7 @@
 @push('scripts')
 <script>
     document.addEventListener('contentChanged', function(e) {
-        loadScripts().then(function() {
-            window.livewire.emit('scriptsLoaded');
-        });
+        loadScripts();
     });
 
     function loadScripts() {
@@ -176,9 +174,7 @@
         });
     }
 
-    loadScripts().then(function() {
-        window.livewire.emit('scriptsLoaded');
-    });
+    loadScripts();
 </script>
 @endpush
 
