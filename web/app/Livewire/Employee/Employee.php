@@ -57,8 +57,8 @@ class Employee extends Component
         $this->office_id = $id;
     }
 
-    public function deleteUser($user_id)
-    {
-        User::destroy($user_id);
-    }
+    // public function deleteUser($user_id)
+    // {
+    //     User::destroy($user_id);
+    // }
 }

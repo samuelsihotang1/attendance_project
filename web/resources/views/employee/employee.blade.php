@@ -90,7 +90,7 @@
                                                                     <span>Edit</span>
                                                                 </a>
                                                             </li>
-                                                            <li class="dropdown-divider"></li>
+                                                            {{-- <li class="dropdown-divider"></li>
                                                             <li>
                                                                 <a wire:click="deleteUser({{$user->id}})"
                                                                     wire:confirm="Apakah kamu yakin ingin menghapus akun {{$user->name}}?"
@@ -98,7 +98,7 @@
                                                                     <i class="feather feather-trash-2 me-3"></i>
                                                                     <span>Delete</span>
                                                                 </a>
-                                                            </li>
+                                                            </li> --}}
                                                         </ul>
                                                     </div>
                                                 </div>
