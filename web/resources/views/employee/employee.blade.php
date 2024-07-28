@@ -28,7 +28,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <a href="customers-create.html" class="btn btn-primary">
+                        <a href="/employee/create" class="btn btn-primary">
                             <i class="feather-plus me-2"></i>
                             <span>Tambah Pegawai</span>
                         </a>
@@ -64,7 +64,8 @@
                                             <td>
                                                 <a href="customers-view.html" class="hstack gap-3">
                                                     <div class="avatar-image avatar-md">
-                                                        <img src="assets/images/avatar/1.png" alt="" class="img-fluid">
+                                                        <img src="{{url('assets/images/avatar/1.png')}}" alt=""
+                                                            class="img-fluid">
                                                     </div>
                                                     <div>
                                                         <span class="text-truncate-1-line">{{$user->name}}</span>
@@ -120,9 +121,7 @@
 @push('scripts')
 <script>
     document.addEventListener('contentChanged', function(e) {
-        loadScripts().then(function() {
-            window.livewire.emit('scriptsLoaded');
-        });
+        loadScripts();
     });
 
     function loadScripts() {
@@ -141,9 +140,7 @@
         });
     }
 
-    loadScripts().then(function() {
-        window.livewire.emit('scriptsLoaded');
-    });
+    loadScripts();
 </script>
 @endpush
 
