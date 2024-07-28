@@ -48,7 +48,7 @@ class Create extends Component
 
     protected function upload($nip)
     {
-        $this->photo->storeAs(path: 'photos', name: $nip . '.' . $this->photo->extension());
+        $this->photo->storeAs(path: 'assets/images/avatar', name: $nip . '.' . $this->photo->extension());
     }
 
     protected function getOffices()

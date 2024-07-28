@@ -30,7 +30,7 @@
         <script src="https:oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https:oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    @stack('styles') 
+    @stack('styles')
     @livewireStyles
 </head>
 
@@ -46,7 +46,8 @@
                     <!-- ========   change your logo hear   ============ -->
                     <img src="{{url('assets/images/logo-full.png')}}" alt="" class="logo logo-lg"
                         style="height: 60px; filter: none;" />
-                    <img src="{{url('assets/images/logo-abbr.png')}}" alt="" class="logo logo-sm" style="filter: none;" />
+                    <img src="{{url('assets/images/logo-abbr.png')}}" alt="" class="logo logo-sm"
+                        style="filter: none;" />
                 </a>
             </div>
             <div class="navbar-content">
@@ -164,12 +165,13 @@
                     <div class="dropdown nxl-h-item">
                         <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button"
                             data-bs-auto-close="outside">
-                            <img src="{{url('assets/images/avatar/1.png')}}" alt="user-image" class="img-fluid user-avtar me-0" />
+                            <img src="{{url('assets/images/avatar/' . Auth::user()->photo)}}" alt="user-image"
+                                class="img-fluid user-avtar me-0" />
                         </a>
                         <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown">
                             <div class="dropdown-header">
                                 <div class="d-flex align-items-center">
-                                    <img src="{{url('assets/images/avatar/1.png')}}" alt="user-image"
+                                    <img src="{{url('assets/images/avatar/' . Auth::user()->photo)}}" alt="user-image"
                                         class="img-fluid user-avtar" />
                                     <div>
                                         <h6 class="text-dark mb-0">{{ Auth::user()->name }}<span

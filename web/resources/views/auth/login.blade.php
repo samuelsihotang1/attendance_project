@@ -3,7 +3,7 @@
         <div class="auth-minimal-inner">
             <div class="minimal-card-wrapper">
                 <div class="d-flex justify-content-center align-items-center">
-                    <img src="assets/images/logo-full.png" alt="" class="img-fluid" style="height: 17vh;">
+                    <img src="{{url('assets/images/logo-full.png')}}" alt="" class="img-fluid" style="height: 17vh;">
                 </div>
                 <div class="card mb-4 mt-5 mx-4 mx-sm-0 position-relative">
                     <div class="card-body p-sm-5">

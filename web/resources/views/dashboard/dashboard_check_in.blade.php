@@ -42,8 +42,8 @@
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="avatar-image">
-                                                        <img src="assets/images/avatar/1.png" alt=""
-                                                            class="img-fluid" />
+                                                        <img src="{{url('assets/images/avatar/' . $user->photo)}}"
+                                                            alt="" class="img-fluid" />
                                                     </div>
                                                     <a href="javascript:void(0);">
                                                         <span class="d-block">{{ $user->name }}</span>
@@ -116,8 +116,8 @@
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="avatar-image">
-                                                        <img src="assets/images/avatar/1.png" alt=""
-                                                            class="img-fluid" />
+                                                        <img src="{{url('assets/images/avatar/' . $user->photo)}}"
+                                                            alt="" class="img-fluid" />
                                                     </div>
                                                     <a href="javascript:void(0);">
                                                         <span class="d-block">{{ $user->name }}</span>

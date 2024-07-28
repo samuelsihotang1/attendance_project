@@ -64,8 +64,8 @@
                                             <td>
                                                 <a href="customers-view.html" class="hstack gap-3">
                                                     <div class="avatar-image avatar-md">
-                                                        <img src="{{url('assets/images/avatar/1.png')}}" alt=""
-                                                            class="img-fluid">
+                                                        <img src="{{url('assets/images/avatar/' . $user->photo)}}"
+                                                            alt="" class="img-fluid">
                                                     </div>
                                                     <div>
                                                         <span class="text-truncate-1-line">{{$user->name}}</span>
