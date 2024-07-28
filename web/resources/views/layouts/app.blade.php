@@ -194,10 +194,25 @@
     </header>
     <!--! ================================================================ !-->
     <!--! [End] Header !-->
+    <main class="nxl-container">
+        @endauth
+
+        {{ $slot }}
+
+        @auth
+        <!-- [ Footer ] start -->
+        <footer class="footer">
+            <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
+                <span>Copyright ©</span>
+                <script>
+                    document.write(new Date().getFullYear());
+                </script>
+                <span>Dinas Pemadam Kebakaran Dan Penyelamatan Kota Medan</span>
+            </p>
+        </footer>
+        <!-- [ Footer ] end -->
+    </main>
     @endauth
-
-    {{ $slot }}
-
     <!--! ================================================================ !-->
     <!--! [End] Main Content !-->
     <!--! ================================================================ !-->
