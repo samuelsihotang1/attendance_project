@@ -12,7 +12,7 @@
                             <div class="card-header-action">
                                 <div class="dropdown">
                                     <div data-bs-toggle="tooltip" title="Refresh">
-                                        <a wire:click="refresh" href="javascript:void(0);"
+                                        <a wire:click="getData" href="javascript:void(0);"
                                             class="avatar-text avatar-xs bg-warning"> </a>
                                     </div>
                                 </div>
@@ -38,7 +38,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($this->presentUsers as $user)
-                                        <tr>
+                                        <tr wire:key="{{ $user->id }}">
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="avatar-image">
@@ -90,7 +90,7 @@
                             <div class="card-header-action">
                                 <div class="dropdown">
                                     <div data-bs-toggle="tooltip" title="Refresh">
-                                        <a wire:click="refresh" href="javascript:void(0);"
+                                        <a wire:click="getData" href="javascript:void(0);"
                                             class="avatar-text avatar-xs bg-warning"> </a>
                                     </div>
                                 </div>
@@ -112,7 +112,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($this->absentUsers as $user)
-                                        <tr>
+                                        <tr wire:key="{{ $user->id }}">
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="avatar-image">
@@ -146,8 +146,15 @@
         </div>
         <!-- [ Main Content ] end -->
     </div>
-    <script src="assets/vendors/js/daterangepicker.min.js"></script>
-    <script src="assets/vendors/js/apexcharts.min.js"></script>
-    <script src="assets/vendors/js/circle-progress.min.js"></script>
-    <script src="assets/js/dashboard-init.min.js"></script>
 </div>
+
+<x-slot:scripts>
+    <script src="{{url('assets/vendors/js/daterangepicker.min.js')}}"></script>
+    <script src="{{url('assets/vendors/js/apexcharts.min.js')}}"></script>
+    <script src="{{url('assets/vendors/js/circle-progress.min.js')}}"></script>
+    <script src="{{url('assets/js/dashboard-init.min.js')}}"></script>
+    </x-slot>
+
+    <x-slot:assets>
+        <link rel="stylesheet" type="text/css" href="assets/vendors/css/daterangepicker.min.css" />
+        </x-slot>

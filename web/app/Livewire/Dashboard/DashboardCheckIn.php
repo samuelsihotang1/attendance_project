@@ -11,18 +11,14 @@ class DashboardCheckIn extends Component
     protected $presentUsers;
     protected $absentUsers;
 
-    public function mount()
-    {
-        $this->getUsers();
-    }
-
-    public function refresh()
+    public function getData()
     {
         $this->getUsers();
     }
 
     public function render()
     {
+        $this->getData();
         return view('dashboard.dashboard_check_in')->title("Absen Masuk");
     }
 
