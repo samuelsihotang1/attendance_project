@@ -18,6 +18,6 @@ class View extends Component
 
     public function render()
     {
-        return view('employee.view')->title($this->user->name);
+        return view('employee.view')->title("Profil - " . $this->user->name);
     }
 }

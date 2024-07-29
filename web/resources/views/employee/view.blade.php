@@ -12,7 +12,7 @@
                                         <span class="d-block mb-2">Daftarkan Akun Pegawai Baru:</span>
                                     </h5>
                                     <button class="btn btn-primary">
-                                        <i class="feather-save me-2"></i>
+                                        <i class="feather-edit me-2"></i>
                                         <span>Edit</span>
                                     </button>
                                 </div>
