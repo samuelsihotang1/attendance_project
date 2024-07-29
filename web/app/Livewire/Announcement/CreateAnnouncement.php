@@ -2,23 +2,19 @@
 
 namespace App\Livewire\Announcement;
 
-use App\Http\Controllers\Utils;
+use App\Models\Announcement;
 use App\Models\Office;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\WithFileUploads;
 use Livewire\Component;
+use Illuminate\Support\Str;
 
 class CreateAnnouncement extends Component
 {
     use WithFileUploads;
 
-    public $photo;
-    public $name;
-    public $nip;
-    public $role;
-    public $rank;
-    public $password;
+    public $title;
+    public $content;
     public $offices;
     public $office_id;
     public $my_office_id;
@@ -27,13 +23,12 @@ class CreateAnnouncement extends Component
     {
         $this->my_office_id = Auth::user()->office_id;
         $this->office_id = $this->my_office_id;
-        $this->role = 'user';
     }
 
     public function render()
     {
         $this->getOffices();
-        return view('announcement.create')->title("Daftar Pegawai");
+        return view('announcement.create')->title("Buat berita");
     }
 
     protected function getOffices()
@@ -41,25 +36,15 @@ class CreateAnnouncement extends Component
         $this->offices = Office::all();
     }
 
-    protected function encryptPassword()
-    {
-        $this->password = bcrypt($this->password);
-    }
-
     public function store()
     {
         $this->validate();
-        $this->encryptPassword();
-        $this->photo = Utils::upload($this->photo);
 
-        User::create([
-            'name' => $this->name,
-            'nip' => $this->nip,
-            'role' => $this->role,
-            'rank' => $this->rank,
-            'password' => $this->password,
+        Announcement::create([
+            'title' => $this->title,
+            'content' => $this->content,
             'office_id' => $this->office_id,
-            'photo' => $this->photo
+            'slug' => Str::slug($this->title),
         ]);
 
         return redirect()->route('announcement');
@@ -68,13 +53,9 @@ class CreateAnnouncement extends Component
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'max:255', 'unique:users,nip'],
-            'role' => ['required', 'string', 'max:255'],
-            'rank' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'max:255'],
-            'office_id' => ['required', 'exists:offices,id'],
-            'photo' => ['image', 'max:2048'],
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:255',
+            'office_id' => 'required|exists:offices,id',
         ];
     }
 }
