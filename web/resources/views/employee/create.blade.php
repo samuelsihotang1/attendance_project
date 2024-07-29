@@ -114,17 +114,21 @@
                                         <label class="fw-semibold" for="office_idInput">Kantor: </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select wire:model="office_id" id="office_idInput" class="form-control" required
-                                            pattern="^[a-zA-Z0-9\s]+$"
-                                            title="Hanya huruf, angka, dan spasi yang diizinkan.">
-                                            @foreach ($this->offices as $office)
-                                            <option value="{{ $office->id }}" data-icon="feather-home" {{ $office->id ==
-                                                $this->my_office_id ? 'selected' : '' }}>{{
-                                                $office->name }}
-                                            </option>
-                                            @endforeach
-                                        </select>
-                                        @error('office_id') <span class="error">{{ $message }}</span> @enderror
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <select wire:model="office_id" id="office_idInput" class="form-control"
+                                                required pattern="^[a-zA-Z0-9\s]+$"
+                                                title="Hanya huruf, angka, dan spasi yang diizinkan.">
+                                                @foreach ($this->offices as $office)
+                                                <option value="{{ $office->id }}" data-icon="feather-home" {{ $office->
+                                                    id ==
+                                                    $this->my_office_id ? 'selected' : '' }}>{{
+                                                    $office->name }}
+                                                </option>
+                                                @endforeach
+                                            </select>
+                                            @error('office_id') <span class="error">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Role --}}
@@ -133,11 +137,14 @@
                                         <label class="fw-semibold" for="roleInput">Role: </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select wire:model="role" id="roleInput" class="form-control">
-                                            <option value="admin" data-icon="feather-lock">Administrator</option>
-                                            <option value="user" data-icon="feather-globe" selected>User</option>
-                                        </select>
-                                        @error('role') <span class="error">{{ $message }}</span> @enderror
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-shield"></i></div>
+                                            <select wire:model="role" id="roleInput" class="form-control">
+                                                <option value="admin" data-icon="feather-lock">Administrator</option>
+                                                <option value="user" data-icon="feather-globe" selected>User</option>
+                                            </select>
+                                            @error('role') <span class="error">{{ $message }}</span> @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </form>

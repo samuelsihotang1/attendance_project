@@ -90,11 +90,14 @@
                                         <label class="fw-semibold" for="office_idInput">Kantor: </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select class="form-control bg-white" disabled>
-                                            <option data-icon="feather-home" selected>
-                                                {{ $this->user->office->name }}
-                                            </option>
-                                        </select>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <select class="form-control bg-white" disabled>
+                                                <option data-icon="feather-home" selected>
+                                                    {{ $this->user->office->name }}
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 {{-- Role --}}
@@ -103,10 +106,14 @@
                                         <label class="fw-semibold" for="roleInput">Role: </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select wire:model="role" id="roleInput" class="form-control bg-white" disabled>
-                                            <option data-icon="feather-globe" selected>{{ $this->user->role == 'admin' ?
-                                                'Admin' : 'User' }}</option>
-                                        </select>
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-shield"></i></div>
+                                            <select wire:model="role" id="roleInput" class="form-control bg-white"
+                                                disabled>
+                                                <option selected>{{ $this->user->role == 'admin' ?
+                                                    'Admin' : 'User' }}</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
