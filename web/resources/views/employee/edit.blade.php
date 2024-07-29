@@ -6,15 +6,15 @@
                 <div class="col-lg-12">
                     <div class="card border-top-0">
                         <div class="tab-pane fade show active">
-                            <div class="card-body personal-info">
+                            <form wire:submit.prevent="store" class="card-body personal-info">
                                 <div class="mb-4 d-flex align-items-center justify-content-between">
                                     <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Daftarkan Akun Pegawai Baru:</span>
+                                        <span class="d-block mb-2">Edit Profil {{ $this->name }}:</span>
                                     </h5>
-                                    <a href="{{route('employee.edit', $this->user->nip)}}" class="btn btn-primary">
-                                        <i class="feather-edit me-2"></i>
-                                        <span>Edit</span>
-                                    </a>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="feather-save me-2"></i>
+                                        <span>Simpan</span>
+                                    </button>
                                 </div>
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-4">
@@ -24,8 +24,22 @@
                                         <div class="mb-4 mb-md-0 d-flex gap-4 your-brand">
                                             <div
                                                 class="wd-100 ht-100 position-relative overflow-hidden border border-gray-2 rounded">
-                                                <img src="{{url('assets/images/avatar/' . $this->user->photo)}}"
+                                                <img src="{{ $photo ? $photo->temporaryUrl() : url('assets/images/avatar/' . $this->user->photo) }}"
                                                     class="upload-pic img-fluid rounded h-100 w-100" alt="">
+                                                <div
+                                                    class="position-absolute start-50 top-50 end-0 bottom-0 translate-middle h-100 w-100 hstack align-items-center justify-content-center c-pointer upload-button">
+                                                    <i class="feather feather-camera" aria-hidden="true"></i>
+                                                </div>
+                                                <input wire:model="photo" class="file-upload" type="file"
+                                                    accept="image/*">
+                                            </div>
+                                            <div class="d-flex flex-column gap-1">
+                                                <div class="fs-11 text-gray-500 mt-2"># Unggah Foto Profil</div>
+                                                <div class="fs-11 text-gray-500"># Rasio 800x800</div>
+                                                <div class="fs-11 text-gray-500"># Ukuran Maks 2mb</div>
+                                                <div class="fs-11 text-gray-500"># Tipe Foto: png, jpg, jpeg
+                                                </div>
+                                                @error('photo') <span class="error">{{ $message }}</span> @enderror
                                             </div>
                                         </div>
                                     </div>
@@ -38,9 +52,11 @@
                                     <div class="col-lg-8">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-user"></i></div>
-                                            <input value="{{ $this->user->name }}" type="text"
-                                                class="form-control bg-white" disabled>
+                                            <input wire:model="name" type="text" class="form-control" id="nameInput"
+                                                placeholder="Nama" required pattern="^[a-zA-Z0-9\s]+$"
+                                                title="Hanya huruf, angka, dan spasi yang diizinkan.">
                                         </div>
+                                        @error('name') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 {{-- Rank --}}
@@ -51,9 +67,11 @@
                                     <div class="col-lg-8">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-briefcase"></i></div>
-                                            <input value="{{ $this->user->rank }}" type="text"
-                                                class="form-control bg-white" disabled>
+                                            <input wire:model="rank" type="text" class="form-control" id="rankInput"
+                                                placeholder="Jabatan" required pattern="^[a-zA-Z0-9\s]+$"
+                                                title="Hanya huruf, angka, dan spasi yang diizinkan.">
                                         </div>
+                                        @error('rank') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 {{-- NIP --}}
@@ -64,9 +82,11 @@
                                     <div class="col-lg-8">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-globe"></i></div>
-                                            <input value="{{ $this->user->nip }}" type="text"
-                                                class="form-control bg-white" disabled>
+                                            <input wire:model="nip" type="text" class="form-control" id="nipInput"
+                                                placeholder="NIP" required pattern="^[a-zA-Z0-9\s]+$"
+                                                title="Hanya huruf, angka, dan spasi yang diizinkan.">
                                         </div>
+                                        @error('nip') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 {{-- Password --}}
@@ -77,11 +97,15 @@
                                     <div class="col-lg-8">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-lock"></i></div>
-                                            <input type="password" class="form-control bg-white" disabled>
+                                            <input wire:model="password" type="password" class="form-control"
+                                                id="passwordInput" placeholder="Password"
+                                                pattern="^[a-zA-Z0-9\s]+$"
+                                                title="Hanya huruf, angka, dan spasi yang diizinkan.">
                                             <button type="button" class="input-group-text" id="togglePassword">
                                                 <i id="eyeIcon" class="feather feather-eye-off"></i>
                                             </button>
                                         </div>
+                                        @error('password') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 {{-- Office --}}
@@ -90,11 +114,17 @@
                                         <label class="fw-semibold" for="office_idInput">Kantor: </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select class="form-control bg-white" disabled>
-                                            <option data-icon="feather-home" selected>
-                                                {{ $this->user->office->name }}
+                                        <select wire:model="office_id" id="office_idInput" class="form-control" required
+                                            pattern="^[a-zA-Z0-9\s]+$"
+                                            title="Hanya huruf, angka, dan spasi yang diizinkan.">
+                                            @foreach ($this->offices as $office)
+                                            <option value="{{ $office->id }}" data-icon="feather-home" {{ $office->id ==
+                                                $this->my_office_id ? 'selected' : '' }}>{{
+                                                $office->name }}
                                             </option>
+                                            @endforeach
                                         </select>
+                                        @error('office_id') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                                 {{-- Role --}}
@@ -103,13 +133,14 @@
                                         <label class="fw-semibold" for="roleInput">Role: </label>
                                     </div>
                                     <div class="col-lg-8">
-                                        <select wire:model="role" id="roleInput" class="form-control bg-white" disabled>
-                                            <option data-icon="feather-globe" selected>{{ $this->user->role == 'admin' ?
-                                                'Admin' : 'User' }}</option>
+                                        <select wire:model="role" id="roleInput" class="form-control">
+                                            <option value="admin" data-icon="feather-lock">Administrator</option>
+                                            <option value="user" data-icon="feather-globe" selected>User</option>
                                         </select>
+                                        @error('role') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

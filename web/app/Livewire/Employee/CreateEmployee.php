@@ -2,10 +2,10 @@
 
 namespace App\Livewire\Employee;
 
+use App\Http\Controllers\Utils;
 use App\Models\Office;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
@@ -36,11 +36,6 @@ class CreateEmployee extends Component
         return view('employee.create')->title("Daftar Pegawai");
     }
 
-    protected function upload($nip)
-    {
-        $this->photo->storeAs(path: 'assets/images/avatar', name: $nip . '.' . $this->photo->extension());
-    }
-
     protected function getOffices()
     {
         $this->offices = Office::all();
@@ -55,7 +50,7 @@ class CreateEmployee extends Component
     {
         $this->validate();
         $this->encryptPassword();
-        $this->upload($this->nip);
+        $this->photo = Utils::upload($this->photo);
 
         User::create([
             'name' => $this->name,
@@ -64,7 +59,7 @@ class CreateEmployee extends Component
             'rank' => $this->rank,
             'password' => $this->password,
             'office_id' => $this->office_id,
-            'photo' => $this->nip . '.' . $this->photo->extension()
+            'photo' => $this->photo
         ]);
 
         return redirect()->route('employee');

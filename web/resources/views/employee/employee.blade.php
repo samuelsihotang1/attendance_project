@@ -87,7 +87,8 @@
                                                         </a>
                                                         <ul class="dropdown-menu">
                                                             <li>
-                                                                <a class="dropdown-item" href="javascript:void(0)">
+                                                                <a class="dropdown-item"
+                                                                    href="{{url('employee/edit/' . $user->nip)}}">
                                                                     <i class="feather feather-edit-3 me-3"></i>
                                                                     <span>Edit</span>
                                                                 </a>
