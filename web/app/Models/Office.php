@@ -22,4 +22,9 @@ class Office extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function announcements(): HasMany
+    {
+        return $this->hasMany(Announcement::class);
+    }
 }

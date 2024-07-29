@@ -12,5 +12,12 @@ class Announcement extends Model
     protected $fillable = [
         'title',
         'content',
+        'office_id',
+        'slug'
     ];
+
+    public function office(): BelongsTo
+    {
+        return $this->belongsTo(Office::class);
+    }
 }

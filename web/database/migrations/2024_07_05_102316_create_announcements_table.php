@@ -15,6 +15,8 @@ return new class extends Migration {
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('content');
+            $table->unsignedBigInteger('office_id');
+            $table->foreign('office_id')->references('id')->on('offices');
             $table->timestamps();
         });
     }
