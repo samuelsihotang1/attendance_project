@@ -11,10 +11,18 @@
                                     <h5 class="fw-bold mb-0 me-4">
                                         <span class="d-block mb-2">Edit Profil - {{ $this->name }}:</span>
                                     </h5>
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="feather-save me-2"></i>
-                                        <span>Simpan</span>
-                                    </button>
+                                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                                        <button type="button" wire:click="destroy"
+                                            wire:confirm="Apakah kamu yakin ingin akun {{ $this->name }}?"
+                                            class="btn btn-light-brand">
+                                            <i class="feather-layers me-2"></i>
+                                            <span>Hapus</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="feather-save me-2"></i>
+                                            <span>Simpan</span>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-4">

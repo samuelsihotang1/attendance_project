@@ -11,10 +11,18 @@
                                     <h5 class="fw-bold mb-0 me-4">
                                         <span class="d-block mb-2">Profil - {{ $this->user->name }}</span>
                                     </h5>
-                                    <a href="{{route('employee.edit', $this->user->nip)}}" class="btn btn-primary">
-                                        <i class="feather-edit me-2"></i>
-                                        <span>Edit</span>
-                                    </a>
+                                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                                        <button type="button" wire:click="destroy"
+                                            wire:confirm="Apakah kamu yakin ingin akun {{ $this->user->name }}?"
+                                            class="btn btn-light-brand">
+                                            <i class="feather-layers me-2"></i>
+                                            <span>Hapus</span>
+                                        </button>
+                                        <a href="{{route('employee.edit', $this->user->nip)}}" class="btn btn-primary">
+                                            <i class="feather-edit me-2"></i>
+                                            <span>Edit</span>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-4">

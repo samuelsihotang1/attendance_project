@@ -109,4 +109,10 @@ class EditEmployee extends Component
             return 'unique:users,nip';
         }
     }
+
+    public function destroy()
+    {
+        $this->user->delete();
+        return redirect()->route('employee');
+    }
 }

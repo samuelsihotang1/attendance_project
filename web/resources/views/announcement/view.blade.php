@@ -11,11 +11,19 @@
                                     <h5 class="fw-bold mb-0 me-4">
                                         <span class="d-block mb-2">Berita - {{ $this->announcement->title }}</span>
                                     </h5>
-                                    <a href="{{route('announcement.edit', $this->announcement->slug)}}"
-                                        class="btn btn-primary">
-                                        <i class="feather-edit me-2"></i>
-                                        <span>Edit</span>
-                                    </a>
+                                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                                        <button type="button" wire:click="destroy"
+                                            wire:confirm="Apakah kamu yakin ingin menghapus berita {{ $this->announcement->title }}?"
+                                            class="btn btn-light-brand">
+                                            <i class="feather-layers me-2"></i>
+                                            <span>Hapus</span>
+                                        </button>
+                                        <a href="{{route('announcement.edit', $this->announcement->slug)}}"
+                                            class="btn btn-primary">
+                                            <i class="feather-edit me-2"></i>
+                                            <span>Edit</span>
+                                        </a>
+                                    </div>
                                 </div>
 
                                 {{-- Name --}}

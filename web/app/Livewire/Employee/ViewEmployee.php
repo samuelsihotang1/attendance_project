@@ -18,4 +18,10 @@ class ViewEmployee extends Component
     {
         return view('employee.view')->title("Profil - " . $this->user->name);
     }
+
+    public function destroy()
+    {
+        $this->user->delete();
+        return redirect()->route('employee');
+    }
 }

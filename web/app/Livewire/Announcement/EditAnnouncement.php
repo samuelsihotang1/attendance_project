@@ -60,6 +60,12 @@ class EditAnnouncement extends Component
         return redirect()->route('announcement');
     }
 
+    public function destroy()
+    {
+        $this->announcement->delete();
+        return redirect()->route('announcement');
+    }
+
     public function rules(): array
     {
         return [

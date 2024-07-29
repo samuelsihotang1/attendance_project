@@ -18,4 +18,10 @@ class ViewAnnouncement extends Component
     {
         return view('announcement.view')->title("Berita - " . $this->announcement->title);
     }
+
+    public function destroy()
+    {
+        $this->announcement->delete();
+        return redirect()->route('announcement');
+    }
 }
