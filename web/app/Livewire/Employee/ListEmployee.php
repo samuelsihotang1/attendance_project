@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
-class Employee extends Component
+class ListEmployee extends Component
 {
     protected $users;
     protected $offices;
@@ -29,7 +29,7 @@ class Employee extends Component
     public function render()
     {
         $this->getData();
-        return view('employee.employee')->title("Pegawai");
+        return view('employee.list')->title("Pegawai");
     }
 
     public function hydrate()
