@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Employee;
 
-use App\Models\Office;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class ViewEmployee extends Component
