@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Announcement;
 
+use App\Models\Announcement;
 use App\Models\Office;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -9,7 +10,7 @@ use Livewire\Component;
 
 class ListAnnouncement extends Component
 {
-    protected $users;
+    protected $announcements;
     protected $offices;
     protected $my_office;
     protected $office_id;
@@ -22,14 +23,14 @@ class ListAnnouncement extends Component
     public function getData()
     {
         $this->getMyOffice();
-        $this->getUsers();
+        $this->getAnnouncements();
         $this->getOffices();
     }
 
     public function render()
     {
         $this->getData();
-        return view('announcement.list')->title("Pegawai");
+        return view('announcement.list')->title("Berita");
     }
 
     public function hydrate()
@@ -42,9 +43,9 @@ class ListAnnouncement extends Component
         $this->my_office = Office::where('id', $this->office_id)->first();
     }
 
-    protected function getUsers()
+    protected function getAnnouncements()
     {
-        $this->users = User::where('office_id', $this->office_id)->get();
+        $this->announcements = Announcement::where('office_id', $this->office_id)->get();
     }
 
     protected function getOffices()

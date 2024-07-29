@@ -60,7 +60,7 @@
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-message-square"></i></div>
                                             <textarea class="form-control bg-white" id="contentInput" cols="30"
-                                                rows="11" placeholder="Konten"
+                                                rows="10" placeholder="Konten"
                                                 disabled>{{{ $this->announcement->content }}}</textarea>
                                         </div>
                                     </div>

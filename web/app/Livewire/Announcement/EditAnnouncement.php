@@ -2,9 +2,9 @@
 
 namespace App\Livewire\Announcement;
 
-use App\Http\Controllers\Utils;
+use App\Models\Announcement;
 use App\Models\Office;
-use App\Models\User;
+use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
@@ -12,27 +12,23 @@ class EditAnnouncement extends Component
 {
     use WithFileUploads;
 
-    public $photo;
-    public $name;
-    public $nip;
-    public $role;
-    public $rank;
-    public $password;
+    public $title;
+    public $content;
     public $offices;
     public $office_id;
     public $my_office_id;
-    public User $user;
+    public Announcement $announcement;
 
-    public function mount($nip)
+    public function mount($slug)
     {
-        $this->user = User::whereNip($nip)->first();
-        $this->dataFromUser();
+        $this->announcement = Announcement::whereSlug($slug)->firstOrFail();
+        $this->dataFromAnnouncement();
     }
 
     public function render()
     {
         $this->getOffices();
-        return view('announcement.edit')->title("Edit Profil - " . $this->name);
+        return view('announcement.edit')->title("Edit Berita - " . $this->announcement->title);
     }
 
     protected function getOffices()
@@ -40,50 +36,26 @@ class EditAnnouncement extends Component
         $this->offices = Office::all();
     }
 
-    protected function encryptPassword()
+    protected function dataFromAnnouncement()
     {
-        $this->password = bcrypt($this->password);
+        $this->title = $this->announcement->title;
+        $this->content = $this->announcement->content;
+        $this->office_id = $this->announcement->office_id;
     }
 
-    protected function dataFromUser()
+    protected function dataToAnnouncement()
     {
-        $this->name = $this->user->name;
-        $this->nip = $this->user->nip;
-        $this->role = $this->user->role;
-        $this->rank = $this->user->rank;
-        $this->office_id = $this->user->office_id;
-    }
-
-    protected function dataToUser()
-    {
-        $this->user->name = $this->name;
-        $this->user->nip = $this->nip;
-        $this->user->role = $this->role;
-        $this->user->rank = $this->rank;
-        $this->user->office_id = $this->office_id;
-
-        if ($this->photo) {
-            $this->user->photo = $this->photo;
-        }
-
-        if ($this->password) {
-            $this->user->password = $this->password;
-        }
+        $this->announcement->title = $this->title;
+        $this->announcement->content = $this->content;
+        $this->announcement->office_id = $this->office_id;
+        $this->announcement->slug = Str::slug($this->title);
     }
 
     public function store()
     {
         $this->validate();
-        if ($this->password) {
-            $this->encryptPassword();
-        }
-
-        if ($this->photo) {
-            $this->photo = Utils::upload($this->photo);
-        }
-
-        $this->dataToUser();
-        $this->user->save();
+        $this->dataToAnnouncement();
+        $this->announcement->save();
 
         return redirect()->route('announcement');
     }
@@ -91,22 +63,9 @@ class EditAnnouncement extends Component
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'nip' => ['required', 'string', 'max:255', $this->uniqueNipRule()],
-            'role' => ['required', 'string', 'max:255'],
-            'rank' => ['required', 'string', 'max:255'],
-            'password' => ['nullable', 'string', 'max:255'],
-            'office_id' => ['required', 'exists:offices,id'],
-            'photo' => ['nullable', 'image', 'max:2048'],
+            'title' => 'required|string|max:255',
+            'content' => 'required|string|max:255',
+            'office_id' => 'required|exists:offices,id',
         ];
-    }
-
-    protected function uniqueNipRule()
-    {
-        if ($this->nip === $this->user->nip) {
-            return '';
-        } else {
-            return 'unique:users,nip';
-        }
     }
 }

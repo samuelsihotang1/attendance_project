@@ -62,7 +62,7 @@
                                     <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-message-square"></i></div>
-                                            <textarea wire:model="content" class="form-control" id="contentInput" cols="30" rows="11"
+                                            <textarea wire:model="content" class="form-control" id="contentInput" cols="30" rows="10"
                                                 placeholder="Konten"></textarea>
                                         </div>
                                         @error('content') <span class="error">{{ $message }}</span> @enderror
