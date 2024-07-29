@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('office_id');
-            $table->foreign('office_id')->references('id')->on('offices');
+            $table->foreign('office_id')->references('id')->on('offices')->onDelete('cascade');
             $table->string('name');
             $table->string('nip')->unique();
             $table->string('photo');
