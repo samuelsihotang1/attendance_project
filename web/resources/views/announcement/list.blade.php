@@ -28,9 +28,9 @@
                                 @endforeach
                             </div>
                         </div>
-                        <a href="/employee/create" class="btn btn-primary">
+                        <a href="/announcement/create" class="btn btn-primary">
                             <i class="feather-plus me-2"></i>
-                            <span>Tambah Pegawai</span>
+                            <span>Tambah Berita</span>
                         </a>
                     </div>
                 </div>
@@ -52,31 +52,30 @@
                                 <table class="table table-hover" id="customerList">
                                     <thead>
                                         <tr>
-                                            <th>Pegawai</th>
-                                            <th>NIP</th>
-                                            <th>Jabatan</th>
-                                            <th class="text-end">Actions</th>
+                                            <th style="width: 15vw;">Judul</th>
+                                            <th>Konten</th>
+                                            <th class="text-end">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($this->users as $user)
-                                        <tr wire:key="{{$user->id}}" class="single-item">
+                                        @foreach ($this->announcements as $announcement)
+                                        <tr wire:key="{{$announcement->id}}" class="single-item">
                                             <td>
-                                                <a href="{{url('employee/view/' . $user->nip)}}" class="hstack gap-3">
-                                                    <div class="avatar-image avatar-md">
-                                                        <img src="{{url('assets/images/avatar/' . $user->photo)}}"
-                                                            alt="" class="img-fluid">
-                                                    </div>
+                                                <a href="{{url('announcement/view/' . $announcement->slug)}}"
+                                                    class="hstack gap-3">
                                                     <div>
-                                                        <span class="text-truncate-1-line">{{$user->name}}</span>
+                                                        <span
+                                                            class="text-truncate-1-line">{{$announcement->title}}</span>
                                                     </div>
                                                 </a>
                                             </td>
-                                            <td>{{$user->nip}}</td>
-                                            <td>{{$user->rank}}</td>
+                                            <td>
+                                                <div>
+                                                    <span class="text-truncate-1-line">{{$announcement->content}}</span>
+                                                </div>
                                             <td>
                                                 <div class="hstack gap-2 justify-content-end">
-                                                    <a href="{{url('employee/view/' . $user->nip)}}"
+                                                    <a href="{{url('announcement/view/' . $announcement->slug)}}"
                                                         class="avatar-text avatar-md">
                                                         <i class="feather feather-eye"></i>
                                                     </a>
@@ -88,7 +87,7 @@
                                                         <ul class="dropdown-menu">
                                                             <li>
                                                                 <a class="dropdown-item"
-                                                                    href="{{url('employee/edit/' . $user->nip)}}">
+                                                                    href="{{url('announcement/edit/' . $announcement->slug)}}">
                                                                     <i class="feather feather-edit-3 me-3"></i>
                                                                     <span>Edit</span>
                                                                 </a>

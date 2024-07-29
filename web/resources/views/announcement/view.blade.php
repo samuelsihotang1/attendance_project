@@ -9,104 +9,60 @@
                             <div class="card-body personal-info">
                                 <div class="mb-4 d-flex align-items-center justify-content-between">
                                     <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Profil - {{ $this->user->name }}</span>
+                                        <span class="d-block mb-2">Berita - {{ $this->announcement->title }}</span>
                                     </h5>
-                                    <a href="{{route('employee.edit', $this->user->nip)}}" class="btn btn-primary">
+                                    <a href="{{route('announcement.edit', $this->announcement->slug)}}"
+                                        class="btn btn-primary">
                                         <i class="feather-edit me-2"></i>
                                         <span>Edit</span>
                                     </a>
                                 </div>
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
-                                        <label class="fw-semibold">Foto Profil: </label>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="mb-4 mb-md-0 d-flex gap-4 your-brand">
-                                            <div
-                                                class="wd-100 ht-100 position-relative overflow-hidden border border-gray-2 rounded">
-                                                <img src="{{url('assets/images/avatar/' . $this->user->photo)}}"
-                                                    class="upload-pic img-fluid rounded h-100 w-100" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+
                                 {{-- Name --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
-                                        <label for="nameInput" class="fw-semibold">Nama: </label>
+                                    <div class="col-lg-3">
+                                        <label for="nameInput" class="fw-semibold">Judul: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-user"></i></div>
-                                            <input value="{{ $this->user->name }}" type="text"
-                                                class="form-control bg-white" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- Rank --}}
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
-                                        <label for="rankInput" class="fw-semibold">Jabatan: </label>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-briefcase"></i></div>
-                                            <input value="{{ $this->user->rank }}" type="text"
-                                                class="form-control bg-white" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- NIP --}}
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
-                                        <label for="nipInput" class="fw-semibold">NIP: </label>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-globe"></i></div>
-                                            <input value="{{ $this->user->nip }}" type="text"
-                                                class="form-control bg-white" disabled>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- Password --}}
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
-                                        <label for="passwordInput" class="fw-semibold">Password: </label>
-                                    </div>
-                                    <div class="col-lg-8">
-                                        <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-lock"></i></div>
-                                            <input type="password" class="form-control bg-white" disabled>
-                                            <button type="button" class="input-group-text" id="togglePassword">
-                                                <i id="eyeIcon" class="feather feather-eye-off"></i>
-                                            </button>
+                                            <div class="input-group-text"><i class="feather-type"></i></div>
+                                            <input value="{{ $this->announcement->title }}" type="text"
+                                                class="form-control bg-white" placeholder="Judul" disabled>
                                         </div>
                                     </div>
                                 </div>
                                 {{-- Office --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label class="fw-semibold" for="office_idInput">Kantor: </label>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <select class="form-control bg-white" disabled>
-                                            <option data-icon="feather-home" selected>
-                                                {{ $this->user->office->name }}
-                                            </option>
-                                        </select>
+                                    <div class="col-lg-9">
+
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <select id="office_idInput" class="form-control bg-white"
+                                                pattern="^[a-zA-Z0-9\s]+$"
+                                                title="Hanya huruf, angka, dan spasi yang diizinkan." disabled>
+                                                <option value="{{ $this->announcement->office->id }}"
+                                                    data-icon="feather-home" selected>{{
+                                                    $this->announcement->office->name }}
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                {{-- Role --}}
+                                {{-- content --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
-                                        <label class="fw-semibold" for="roleInput">Role: </label>
+                                    <div class="col-lg-3">
+                                        <label for="contentInput" class="fw-semibold">Konten: </label>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <select wire:model="role" id="roleInput" class="form-control bg-white" disabled>
-                                            <option data-icon="feather-globe" selected>{{ $this->user->role == 'admin' ?
-                                                'Admin' : 'User' }}</option>
-                                        </select>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-message-square"></i></div>
+                                            <textarea class="form-control bg-white" id="contentInput" cols="30"
+                                                rows="11" placeholder="Konten"
+                                                disabled>{{{ $this->announcement->content }}}</textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

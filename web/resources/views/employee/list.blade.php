@@ -55,7 +55,7 @@
                                             <th>Pegawai</th>
                                             <th>NIP</th>
                                             <th>Jabatan</th>
-                                            <th class="text-end">Actions</th>
+                                            <th class="text-end">Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>

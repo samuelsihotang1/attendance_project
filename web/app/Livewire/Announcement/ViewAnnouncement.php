@@ -2,20 +2,20 @@
 
 namespace App\Livewire\Announcement;
 
-use App\Models\User;
+use App\Models\Announcement;
 use Livewire\Component;
 
 class ViewAnnouncement extends Component
 {
-    public User $user;
+    public Announcement $announcement;
 
-    public function mount($nip)
+    public function mount($slug)
     {
-        $this->user = User::whereNip($nip)->firstOrFail();
+        $this->announcement = Announcement::whereSlug($slug)->firstOrFail();
     }
 
     public function render()
     {
-        return view('announcement.view')->title("Profil - " . $this->user->name);
+        return view('announcement.view')->title("Berita - " . $this->announcement->title);
     }
 }
