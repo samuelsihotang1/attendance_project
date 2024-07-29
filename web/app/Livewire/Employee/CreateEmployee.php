@@ -9,19 +9,9 @@ use Livewire\Attributes\Validate;
 use Livewire\WithFileUploads;
 use Livewire\Component;
 
-class Create extends Component
+class CreateEmployee extends Component
 {
     use WithFileUploads;
-
-    #[Validate([
-        'name' => 'required|regex:/^[\pL\pN\s]+$/u',
-        'nip' => 'required|regex:/^[\pL\pN\s]+$/u|unique:users',
-        'role' => 'required|regex:/^[\pL\pN\s]+$/u',
-        'rank' => 'required|regex:/^[\pL\pN\s]+$/u',
-        'password' => 'required|regex:/^[\pL\pN\s]+$/u',
-        'office_id' => 'required|exists:offices,id',
-        'photo' => 'image|max:2048',
-    ])]
 
     public $photo;
     public $name;
@@ -78,5 +68,18 @@ class Create extends Component
         ]);
 
         return redirect()->route('employee');
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name' => ['required', 'string', 'max:255'],
+            'nip' => ['required', 'string', 'max:255', 'unique:users,nip'],
+            'role' => ['required', 'string', 'max:255'],
+            'rank' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'max:255'],
+            'office_id' => ['required', 'exists:offices,id'],
+            'photo' => ['image', 'max:2048'],
+        ];
     }
 }
