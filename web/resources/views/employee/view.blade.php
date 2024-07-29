@@ -9,7 +9,7 @@
                             <div class="card-body personal-info">
                                 <div class="mb-4 d-flex align-items-center justify-content-between">
                                     <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Daftarkan Akun Pegawai Baru:</span>
+                                        <span class="d-block mb-2">Profil - {{ $this->user->name }}</span>
                                     </h5>
                                     <a href="{{route('employee.edit', $this->user->nip)}}" class="btn btn-primary">
                                         <i class="feather-edit me-2"></i>

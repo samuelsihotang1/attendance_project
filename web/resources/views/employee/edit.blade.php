@@ -9,7 +9,7 @@
                             <form wire:submit.prevent="store" class="card-body personal-info">
                                 <div class="mb-4 d-flex align-items-center justify-content-between">
                                     <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Edit Profil {{ $this->name }}:</span>
+                                        <span class="d-block mb-2">Edit Profil - {{ $this->name }}:</span>
                                     </h5>
                                     <button type="submit" class="btn btn-primary">
                                         <i class="feather-save me-2"></i>

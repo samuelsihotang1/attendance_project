@@ -32,7 +32,7 @@ class EditEmployee extends Component
     public function render()
     {
         $this->getOffices();
-        return view('employee.edit')->title("Edit Profil " . $this->name);
+        return view('employee.edit')->title("Edit Profil - " . $this->name);
     }
 
     protected function getOffices()
