@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 class Utils extends Controller
 {
-    public static function upload($photo)
+    public static function upload($photo, $folder = 'other')
     {
-        $path = 'assets/images/avatar/';
+        $path = 'assets/images/' . $folder . '/';
         $extension = $photo->extension();
         $name = uniqid();
 

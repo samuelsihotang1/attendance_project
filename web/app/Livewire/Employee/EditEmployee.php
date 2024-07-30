@@ -79,7 +79,7 @@ class EditEmployee extends Component
         }
 
         if ($this->photo) {
-            $this->photo = Utils::upload($this->photo);
+            $this->photo = Utils::upload($this->photo, 'avatar');
         }
 
         $this->dataToUser();

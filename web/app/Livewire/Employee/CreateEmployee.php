@@ -50,7 +50,7 @@ class CreateEmployee extends Component
     {
         $this->validate();
         $this->encryptPassword();
-        $this->photo = Utils::upload($this->photo);
+        $this->photo = Utils::upload($this->photo, 'avatar');
 
         User::create([
             'name' => $this->name,
