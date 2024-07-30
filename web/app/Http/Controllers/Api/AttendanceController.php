@@ -226,10 +226,10 @@ class AttendanceController extends Controller
 
         $now = date('H:i:s');
 
-        $startTime = strtotime($start);
-        $endTime = strtotime($end);
-        $nowTime = strtotime($now);
-
+        $startTime = strtotime($start) - strtotime('today');
+        $endTime = strtotime($end) - strtotime('today');
+        $nowTime = strtotime($now) - strtotime('today');
+        
         if ($nowTime <= $startTime) {
             return $nowTime - $startTime;
         } elseif ($nowTime >= $endTime) {

@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\AuthenticationController;
-use App\Http\Controllers\Api\FeedController;
 use Illuminate\Support\Facades\Route;
 
 // Authenticate
