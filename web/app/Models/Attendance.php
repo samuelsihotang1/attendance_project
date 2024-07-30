@@ -12,11 +12,11 @@ class Attendance extends Model
 
     protected $fillable = [
         'user_id',
+        'type',
+        'image',
+        'time_deviation',
         'latitude',
         'longitude',
-        'type',
-        'status',
-        'deviation',
     ];
 
     public function user(): BelongsTo

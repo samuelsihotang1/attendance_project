@@ -13,39 +13,21 @@ class OfficeSeeder extends Seeder
      */
     public function run(): void
     {
-        Office::create([
-            'name' => 'Office One',
-            'address' => '123 Main Street',
-            'latitude' => '40.712776',
-            'longitude' => '-74.005974',
-        ]);
+        $offices = [
+            ['name' => 'Office 1', 'address' => '123 Main St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '06:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 2', 'address' => '456 Elm St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 3', 'address' => '789 Oak St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '08:30:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 4', 'address' => '101 Pine St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '08:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 5', 'address' => '202 Maple St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 6', 'address' => '303 Cedar St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '08:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 7', 'address' => '404 Birch St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '08:30:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 8', 'address' => '505 Willow St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 9', 'address' => '606 Chestnut St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '08:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+            ['name' => 'Office 10', 'address' => '707 Fir St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00:00', 'end_open' => '08:00:00', 'start_close' => '17:00:00', 'end_close' => '20:00:00'],
+        ];
 
-        Office::create([
-            'name' => 'Office Two',
-            'address' => '456 Elm Street',
-            'latitude' => '34.052235',
-            'longitude' => '-118.243683',
-        ]);
-
-        Office::create([
-            'name' => 'Office Three',
-            'address' => '789 Oak Street',
-            'latitude' => '41.878113',
-            'longitude' => '-87.629799',
-        ]);
-
-        Office::create([
-            'name' => 'Office Four',
-            'address' => '101 Maple Avenue',
-            'latitude' => '37.774929',
-            'longitude' => '-122.419418',
-        ]);
-
-        Office::create([
-            'name' => 'Office Five',
-            'address' => '202 Pine Street',
-            'latitude' => '51.507351',
-            'longitude' => '-0.127758',
-        ]);
+        foreach ($offices as $office) {
+            Office::create($office);
+        }
     }
 }

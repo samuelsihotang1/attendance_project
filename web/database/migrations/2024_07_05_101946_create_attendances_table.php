@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->enum('type', ['in', 'out']);
             $table->string('image');
-            $table->integer('late')->nullable();
+            $table->integer('time_deviation')->nullable();
             $table->string('latitude');
             $table->string('longitude');
             $table->timestamps();

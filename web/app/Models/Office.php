@@ -16,6 +16,10 @@ class Office extends Model
         'address',
         'latitude',
         'longitude',
+        'start_open',
+        'end_open',
+        'start_close',
+        'end_close',
     ];
 
     public function users(): HasMany
