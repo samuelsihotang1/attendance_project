@@ -7,24 +7,21 @@ use App\Models\Announcement;
 
 class AnnouncementController extends Controller
 {
-    public function getFewData()
-    {
-        // untuk 2 data saja
-        $data = Announcement::take(2)->latest()->get();
-
-        return response([
-            'success' => true,
-            'data' => $data,
-        ], 200);
-    }
     public function getAllData()
     {
-        $data = Announcement::latest()->get();
+        try {
+            $data = Announcement::latest()->get();
 
-        return response([
-            'success' => true,
-            'data' => $data,
-        ], 200);
+            return response([
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exception: ' . $e->getMessage(),
+            ], 422);
+        }
     }
 }
 

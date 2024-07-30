@@ -108,41 +108,45 @@ class AttendanceController extends Controller
         }
     }
 
-    public function getTodayData()
-    {
-        $userId = auth()->user()->id;
-
-        $data = Attendance::where('user_id', $userId)->whereDate('created_at', today())->latest()->get();
-
-        return response([
-            'success' => true,
-            'data' => $data,
-        ], 200);
-    }
-
-    public function getFewData()
-    {
-        $userId = auth()->user()->id;
-
-        // untuk 2 hari terakhir
-        $data = Attendance::where('user_id', $userId)->take(4)->latest()->get();
-
-        return response([
-            'success' => true,
-            'data' => $data,
-        ], 200);
-    }
-
     public function getAllData()
     {
-        $userId = auth()->user()->id;
+        try {
+            $data = Attendance::where('user_id', Auth::user()->id)->orderBy('created_at')->get();
 
-        $data = Attendance::where('user_id', $userId)->latest()->get();
+            $groupedData = [];
 
-        return response([
-            'success' => true,
-            'data' => $data,
-        ], 200);
+            foreach ($data as $attendance) {
+                $date = $attendance->created_at->format('Y-m-d');
+
+                if (!isset($groupedData[$date])) {
+                    $groupedData[$date] = [
+                        'in' => null,
+                        'out' => null,
+                    ];
+                }
+
+                if ($attendance->type == 'in') {
+                    $groupedData[$date]['in'] = $attendance;
+                } else {
+                    $groupedData[$date]['out'] = $attendance;
+                }
+            }
+
+            $result = [];
+            foreach ($groupedData as $date => $attendance) {
+                $result[] = $attendance;
+            }
+
+            return response([
+                'success' => true,
+                'data' => $result,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exception: ' . $e->getMessage(),
+            ], 422);
+        }
     }
 
     protected function checkLocation($employeeLatitude, $employeeLongitude)
@@ -229,7 +233,7 @@ class AttendanceController extends Controller
         $startTime = strtotime($start) - strtotime('today');
         $endTime = strtotime($end) - strtotime('today');
         $nowTime = strtotime($now) - strtotime('today');
-        
+
         if ($nowTime <= $startTime) {
             return $nowTime - $startTime;
         } elseif ($nowTime >= $endTime) {
