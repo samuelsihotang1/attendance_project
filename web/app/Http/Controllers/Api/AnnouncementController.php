@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class AnnouncementController extends Controller
 {
     public function getAllData()
     {
         try {
-            $data = Announcement::latest()->get();
+            $data = Announcement::where('office_id', Auth::user()->office_id)->latest()->get();
 
             return response([
                 'success' => true,

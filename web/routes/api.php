@@ -17,7 +17,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/attendance/all', [AttendanceController::class, 'getAllData']);
 
     // Announcement
-    Route::get('/announcement/few', [AnnouncementController::class, 'getFewData']);
     Route::get('/announcement/all', [AnnouncementController::class, 'getAllData']);
 
     // Test
