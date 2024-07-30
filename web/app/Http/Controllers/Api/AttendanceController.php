@@ -19,6 +19,7 @@ class AttendanceController extends Controller
         //     "longitude": "99.14864718342184",
         //     "type": "in"
         // }
+
         try {
             $request->validate([
                 'latitude' => ['required', 'string', 'max:24'],
@@ -26,11 +27,14 @@ class AttendanceController extends Controller
                 'type' => ['required', 'string', 'in:in,out'],
             ]);
 
-            if ($this->checkLocation($request->latitude, $request->longitude) > 50.0) {
-                return response([
-                    'success' => false,
-                    'message' => 'Anda jauh dari lokasi kantor',
-                ]);
+            $response_store = $this->checkStoreType($request->type);
+            if ($response_store != null) {
+                return $response_store;
+            }
+
+            $response_location = $this->checkLocation($request->latitude, $request->longitude);
+            if ($response_location != null) {
+                return $response_location;
             }
 
             $timeDeviation = $this->checkTime($request->type);
@@ -38,13 +42,13 @@ class AttendanceController extends Controller
                 return response([
                     'success' => false,
                     'message' => $timeDeviation > 0 ? 'Anda telah terlambat' : 'Anda terlalu cepat datang',
-                ]);
+                ], 403);
             }
 
             return response([
                 'success' => 'true',
                 'message' => 'Success',
-            ])->setStatusCode(200);
+            ], 200);
         } catch (Exception $e) {
             return response()->json([
                 'success' => false,
@@ -71,21 +75,17 @@ class AttendanceController extends Controller
                 'image' => ['required', 'image', 'max:2048'],
             ]);
 
-            if ($this->checkLocation($request->latitude, $request->longitude) > 50.0) {
-                return response([
-                    'success' => false,
-                    'message' => 'Anda jauh dari lokasi kantor',
-                ]);
+            $response_store = $this->checkStoreType($request->type);
+            if ($response_store != null) {
+                return $response_store;
+            }
+
+            $response_location = $this->checkLocation($request->latitude, $request->longitude);
+            if ($response_location != null) {
+                return $response_location;
             }
 
             $timeDeviation = $this->checkTime($request->type);
-            if ($timeDeviation != 0) {
-                return response([
-                    'success' => false,
-                    'message' => $timeDeviation > 0 ? 'Anda telah terlambat' : 'Anda terlalu cepat datang',
-                ]);
-            }
-
             $image = Utils::upload($request->image, 'attendance');
 
             $attendance = Auth::user()->attendances()->create([
@@ -161,7 +161,54 @@ class AttendanceController extends Controller
             sin($lonDelta / 2) * sin($lonDelta / 2);
         $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
 
-        return $earthRadius * $c;
+        if (($earthRadius * $c) > 50.0) {
+            return response([
+                'success' => false,
+                'message' => 'Anda terlalu jauh dari lokasi kantor',
+            ], 403);
+        }
+
+        return null;
+    }
+
+    protected function checkStoreType($type)
+    {
+        $is_attendance_in =
+            Attendance::where('user_id', Auth::user()->id)
+                ->where('type', 'in')
+                ->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
+                ->exists();
+
+        $is_attendance_out =
+            Attendance::where('user_id', Auth::user()->id)
+                ->where('type', 'out')
+                ->whereBetween('created_at', [now()->startOfDay(), now()->endOfDay()])
+                ->exists();
+
+        if ($type == 'out') {
+            if (!$is_attendance_in) {
+                return response([
+                    'success' => false,
+                    'message' => 'Anda harus absen masuk terlebih dahulu',
+                ], 403);
+            }
+
+            if ($is_attendance_out) {
+                return response([
+                    'success' => false,
+                    'message' => 'Anda sudah absen keluar',
+                ], 403);
+            }
+        } else if ($type == 'in') {
+            if ($is_attendance_in) {
+                return response([
+                    'success' => false,
+                    'message' => 'Anda sudah absen masuk',
+                ], 403);
+            }
+        }
+
+        return null;
     }
 
     protected function checkTime($type)
