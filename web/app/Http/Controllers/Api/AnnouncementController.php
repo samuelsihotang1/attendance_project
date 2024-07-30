@@ -25,5 +25,22 @@ class AnnouncementController extends Controller
             ], 422);
         }
     }
+
+    public function getFewData()
+    {
+        try {
+            $data = Announcement::where('office_id', Auth::user()->office_id)->latest()->take(2)->get();
+
+            return response([
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exception: ' . $e->getMessage(),
+            ], 422);
+        }
+    }
 }
 

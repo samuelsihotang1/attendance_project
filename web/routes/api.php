@@ -15,9 +15,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/attendance/validate', [AttendanceController::class, 'validateAttendance']);
     Route::post('/attendance/store', [AttendanceController::class, 'store']);
     Route::get('/attendance/all', [AttendanceController::class, 'getAllData']);
+    Route::get('/attendance/few', [AttendanceController::class, 'getFewData']);
 
     // Announcement
     Route::get('/announcement/all', [AnnouncementController::class, 'getAllData']);
+    Route::get('/announcement/few', [AnnouncementController::class, 'getFewData']);
 
     // Test
     // Route::post('/test', [AttendanceController::class, 'checkTime']);

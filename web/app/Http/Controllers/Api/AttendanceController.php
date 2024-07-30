@@ -149,6 +149,47 @@ class AttendanceController extends Controller
         }
     }
 
+    public function getFewData()
+    {
+        try {
+            $data = Attendance::where('user_id', Auth::user()->id)->latest()->take(4)->get();
+
+            $groupedData = [];
+
+            foreach ($data as $attendance) {
+                $date = $attendance->created_at->format('Y-m-d');
+
+                if (!isset($groupedData[$date])) {
+                    $groupedData[$date] = [
+                        'in' => null,
+                        'out' => null,
+                    ];
+                }
+
+                if ($attendance->type == 'in') {
+                    $groupedData[$date]['in'] = $attendance;
+                } else {
+                    $groupedData[$date]['out'] = $attendance;
+                }
+            }
+
+            $result = [];
+            foreach ($groupedData as $date => $attendance) {
+                $result[] = $attendance;
+            }
+
+            return response([
+                'success' => true,
+                'data' => $result,
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Exception: ' . $e->getMessage(),
+            ], 422);
+        }
+    }
+
     protected function checkLocation($employeeLatitude, $employeeLongitude)
     {
         $latFrom = deg2rad(Auth::user()->office->latitude);
