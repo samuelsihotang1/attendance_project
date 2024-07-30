@@ -14,11 +14,18 @@ return new class extends Migration {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('latitude');
-            $table->string('longitude');
-            $table->enum('type', ['in', 'out']);
-            $table->enum('status', ['late', 'ontime']);
-            $table->string('deviation')->nullable();
+            // in
+            $table->timestamp('time_in');
+            $table->string('image_in');
+            $table->integer('late_in')->nullable();
+            $table->string('latitude_in');
+            $table->string('longitude_in');
+            // out
+            $table->timestamp('time_out')->nullable();
+            $table->string('image_out')->nullable();
+            $table->integer('late_out')->nullable();
+            $table->string('latitude_out')->nullable();
+            $table->string('longitude_out')->nullable();
             $table->timestamps();
         });
     }
