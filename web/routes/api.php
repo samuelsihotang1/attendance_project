@@ -13,13 +13,16 @@ Route::post('/login', [AuthenticationController::class, 'login']);
 // Agar harus authorize dengan token, gunakan middleware 'auth:sanctum'
 Route::middleware('auth:sanctum')->group(function () {
     // Attendance
+    Route::post('/attendance/validate', [AttendanceController::class, 'validateAttendance']);
     Route::get('/attendance/today', [AttendanceController::class, 'getTodayData']);
     Route::get('/attendance/few', [AttendanceController::class, 'getFewData']);
     Route::get('/attendance/all', [AttendanceController::class, 'getAllData']);
-    Route::post('/attendance/checklocation', [AttendanceController::class, 'checkLocation']);
     Route::post('/attendance/store', [AttendanceController::class, 'store']);
 
     // Announcement
     Route::get('/announcement/few', [AnnouncementController::class, 'getFewData']);
     Route::get('/announcement/all', [AnnouncementController::class, 'getAllData']);
+
+    // Test
+    // Route::post('/test', [AttendanceController::class, 'checkTime']);
 });
