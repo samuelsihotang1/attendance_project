@@ -111,7 +111,7 @@ class AttendanceController extends Controller
     public function getAllData()
     {
         try {
-            $data = Attendance::where('user_id', Auth::user()->id)->orderBy('created_at')->get();
+            $data = Attendance::where('user_id', Auth::user()->id)->latest()->get();
 
             $groupedData = [];
 
