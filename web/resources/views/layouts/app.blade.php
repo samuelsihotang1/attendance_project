@@ -154,14 +154,14 @@
                             </a>
                         </div>
                     </div>
-                    <div class="nxl-h-item dark-light-theme">
+                    {{-- <div class="nxl-h-item dark-light-theme">
                         <a href="javascript:void(0);" class="nxl-head-link me-0 dark-button">
                             <i class="feather-moon"></i>
                         </a>
                         <a href="javascript:void(0);" class="nxl-head-link me-0 light-button" style="display: none">
                             <i class="feather-sun"></i>
                         </a>
-                    </div>
+                    </div> --}}
                     <div class="dropdown nxl-h-item">
                         <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button"
                             data-bs-auto-close="outside">
@@ -215,10 +215,11 @@
         </footer>
         <!-- [ Footer ] end -->
     </main>
-    @endauth
     <!--! ================================================================ !-->
     <!--! [End] Main Content !-->
     <!--! ================================================================ !-->
+    @endauth
+    {{-- @auth
     <!--! ================================================================ !-->
     <!--! BEGIN: Theme Customizer !-->
     <!--! ================================================================ !-->
@@ -434,6 +435,7 @@
     <!--! ================================================================ !-->
     <!--! [End] Theme Customizer !-->
     <!--! ================================================================ !-->
+    @endauth --}}
     <!--! ================================================================ !-->
     <!--! Footer Script !-->
     <!--! ================================================================ !-->
@@ -444,9 +446,10 @@
     <!--! BEGIN: Apps Init  !-->
     <script src="{{url('assets/js/common-init.min.js')}}"></script>
     <!--! END: Apps Init !-->
+    {{--
     <!--! BEGIN: Theme Customizer  !-->
     <script src="{{url('assets/js/theme-customizer-init.min.js')}}"></script>
-    <!--! END: Theme Customizer !-->
+    <!--! END: Theme Customizer !--> --}}
     @stack('scripts')
     @livewireScripts
 </body>
