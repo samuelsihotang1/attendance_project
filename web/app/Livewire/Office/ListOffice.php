@@ -31,7 +31,7 @@ class ListOffice extends Component
         $this->offices = Office::all();
 
         foreach ($this->offices as $office) {
-            $office->start_close = Carbon::parse($office->start_close)->format('H:i');
+            $office->end_open = Carbon::parse($office->end_open)->format('H:i');
             $office->end_close = Carbon::parse($office->end_close)->format('H:i');
         }
     }
