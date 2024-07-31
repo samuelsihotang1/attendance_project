@@ -46,7 +46,7 @@ class AttendanceController extends Controller
             }
 
             return response([
-                'success' => 'true',
+                'success' => true,
                 'message' => 'Success',
             ], 200);
         } catch (Exception $e) {
