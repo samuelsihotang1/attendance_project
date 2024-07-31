@@ -11,6 +11,10 @@ use App\Livewire\Announcement\CreateAnnouncement;
 use App\Livewire\Announcement\EditAnnouncement;
 use App\Livewire\Announcement\ListAnnouncement;
 use App\Livewire\Announcement\ViewAnnouncement;
+use App\Livewire\Office\CreateOffice;
+use App\Livewire\Office\EditOffice;
+use App\Livewire\Office\ListOffice;
+use App\Livewire\Office\ViewOffice;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -37,4 +41,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/announcement/create', CreateAnnouncement::class)->name('announcement.create');
     Route::get('/announcement/view/{slug}', ViewAnnouncement::class)->name('announcement.view');
     Route::get('/announcement/edit/{slug}', EditAnnouncement::class)->name('announcement.edit');
+
+    // Office
+    Route::get('/office', ListOffice::class)->name('office');
+    Route::get('/office/create', CreateOffice::class)->name('office.create');
+    Route::get('/office/view/{slug}', ViewOffice::class)->name('office.view');
+    Route::get('/office/edit/{slug}', EditOffice::class)->name('office.edit');
 });
