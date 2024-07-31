@@ -59,6 +59,52 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'office_id' => 6,
+            'name' => 'David Harris',
+            'nip' => '6789012345',
+            'photo' => '1.png',
+            'rank' => 'Lead Developer',
+            'password' => Hash::make('password6'),
+        ]);
+
+        User::create([
+            'office_id' => 7,
+            'name' => 'Eve Clark',
+            'nip' => '7890123456',
+            'photo' => '1.png',
+            'rank' => 'Project Manager',
+            'password' => Hash::make('password7'),
+        ]);
+
+        User::create([
+            'office_id' => 8,
+            'name' => 'Frank White',
+            'nip' => '8901234567',
+            'photo' => '1.png',
+            'rank' => 'System Analyst',
+            'password' => Hash::make('password8'),
+        ]);
+
+        User::create([
+            'office_id' => 9,
+            'name' => 'Grace Lewis',
+            'nip' => '9012345678',
+            'photo' => '1.png',
+            'rank' => 'UX Designer',
+            'password' => Hash::make('password9'),
+        ]);
+
+        User::create([
+            'office_id' => 10,
+            'name' => 'Henry Walker',
+            'nip' => '0123456789',
+            'photo' => '1.png',
+            'rank' => 'QA Engineer',
+            'password' => Hash::make('password10'),
+        ]);
+
+
+        User::create([
             'office_id' => 1,
             'name' => 'Administrator',
             'nip' => 'admin@gmail.com',
