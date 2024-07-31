@@ -1,5 +1,43 @@
 <div>
     <div class="nxl-content">
+        <!-- [ page-header ] start -->
+        <div class="page-header">
+            <div class="page-header-right ms-auto">
+                <div class="page-header-right-items">
+                    <div class="d-flex d-md-none">
+                        <a href="javascript:void(0)" class="page-header-right-close-toggle">
+                            <i class="feather-arrow-left me-2"></i>
+                            <span>Back</span>
+                        </a>
+                    </div>
+                    <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                        <div class="dropdown">
+                            <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
+                                data-bs-auto-close="outside">
+                                <i class="feather-filter me-2"></i>
+                                <span>{{ $this->my_office->name }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                @foreach ($this->offices as $office)
+                                <a wire:key="{{$office->id}}" wire:click="setOffice({{$office->id}})"
+                                    href="javascript:void(0);" class="dropdown-item
+                                    {{$office->id == $this->my_office->id ? ' active' : ''}}
+                                    ">
+                                    <i class="feather-users me-3"></i>
+                                    <span>{{$office->name}}</span>
+                                </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-md-none d-flex align-items-center">
+                    <a href="javascript:void(0)" class="page-header-right-open-toggle">
+                        <i class="feather-align-right fs-20"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
         <!-- [ Main Content ] start -->
         <div class="main-content">
             <div class="row">
@@ -41,24 +79,29 @@
                                         <tr wire:key="{{ $user->id }}">
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
-                                                    <div class="avatar-image">
+                                                    <a href="{{url('/employee/view/' . $user->nip)}}"
+                                                        class="avatar-image">
                                                         <img src="{{url('assets/images/avatar/' . $user->photo)}}"
                                                             alt="" class="img-fluid" />
-                                                    </div>
-                                                    <a href="javascript:void(0);">
+                                                    </a>
+                                                    <a href="{{url('/employee/view/' . $user->nip)}}">
                                                         <span class="d-block">{{ $user->name }}</span>
                                                     </a>
                                                 </div>
                                             </td>
                                             <td> {{ $user->attendancesInToday[0]->created_at->format('H:i') }}</td>
                                             <td>
-                                                @if ($user->attendancesInToday[0]->status == 'ontime')
+                                                @if ($user->attendancesInToday[0]->time_deviation == 0)
                                                 <span class="badge bg-soft-success text-success">
                                                     Tepat Waktu
                                                 </span>
-                                                @elseif($user->attendancesInToday[0]->status == 'late')
+                                                @elseif($user->attendancesInToday[0]->time_deviation > 0)
                                                 <span class="badge bg-soft-warning text-danger">
                                                     Terlambat
+                                                </span>
+                                                @elseif($user->attendancesInToday[0]->time_deviation < 0)
+                                                <span class="badge bg-soft-warning text-danger">
+                                                    Terlalu Cepat
                                                 </span>
                                                 @endif
                                             </td>
@@ -115,11 +158,12 @@
                                         <tr wire:key="{{ $user->id }}">
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
-                                                    <div class="avatar-image">
+                                                    <a href="{{url('/employee/view/' . $user->nip)}}"
+                                                        class="avatar-image">
                                                         <img src="{{url('assets/images/avatar/' . $user->photo)}}"
                                                             alt="" class="img-fluid" />
-                                                    </div>
-                                                    <a href="javascript:void(0);">
+                                                    </a>
+                                                    <a href="{{url('/employee/view/' . $user->nip)}}">
                                                         <span class="d-block">{{ $user->name }}</span>
                                                     </a>
                                                 </div>
@@ -130,7 +174,7 @@
                                         <tr>
                                             <td>
                                                 <div class="d-flex justify-content-center align-items-center gap-3">
-                                                    <span class="d-block">Tidak ada yang hadir</span>
+                                                    <span class="d-block">Semua hadir</span>
                                                 </div>
                                             </td>
                                         </tr>
