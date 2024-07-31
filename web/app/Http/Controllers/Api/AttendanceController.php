@@ -258,8 +258,6 @@ class AttendanceController extends Controller
 
     protected function checkTime($type)
     {
-        date_default_timezone_set('Asia/Jakarta');
-
         $office = Auth::user()->office;
         $start = $office->start_open;
         $end = $office->end_open;
