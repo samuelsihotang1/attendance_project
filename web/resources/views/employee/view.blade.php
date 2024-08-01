@@ -25,10 +25,10 @@
                                     </div>
                                 </div>
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label class="fw-semibold">Foto Profil: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="mb-4 mb-md-0 d-flex gap-4 your-brand">
                                             <div
                                                 class="wd-100 ht-100 position-relative overflow-hidden border border-gray-2 rounded">
@@ -40,10 +40,10 @@
                                 </div>
                                 {{-- Name --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label for="nameInput" class="fw-semibold">Nama: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-user"></i></div>
                                             <input value="{{ $this->user->name }}" type="text"
@@ -53,10 +53,10 @@
                                 </div>
                                 {{-- Rank --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label for="rankInput" class="fw-semibold">Jabatan: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-briefcase"></i></div>
                                             <input value="{{ $this->user->rank }}" type="text"
@@ -66,10 +66,10 @@
                                 </div>
                                 {{-- NIP --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label for="nipInput" class="fw-semibold">NIP: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-globe"></i></div>
                                             <input value="{{ $this->user->nip }}" type="text"
@@ -79,10 +79,10 @@
                                 </div>
                                 {{-- Password --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label for="passwordInput" class="fw-semibold">Password: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-lock"></i></div>
                                             <input type="password" class="form-control bg-white" disabled>
@@ -94,10 +94,10 @@
                                 </div>
                                 {{-- Office --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label class="fw-semibold" for="office_idInput">Kantor: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-map-pin"></i></div>
                                             <select class="form-control bg-white" disabled>
@@ -110,10 +110,10 @@
                                 </div>
                                 {{-- Role --}}
                                 <div class="row mb-4 align-items-center">
-                                    <div class="col-lg-4">
+                                    <div class="col-lg-3">
                                         <label class="fw-semibold" for="roleInput">Role: </label>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-shield"></i></div>
                                             <select wire:model="role" id="roleInput" class="form-control bg-white"
