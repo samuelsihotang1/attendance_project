@@ -1,14 +1,17 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:collection/collection.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image/image.dart' as img;
 import 'package:mobile/style/color.dart';
+import 'package:mobile/service/api_service.dart';
+import 'package:provider/provider.dart';
+import 'package:mobile/provider/attendance_provider.dart';
 
 class TakePhotoScreen extends StatefulWidget {
-  const TakePhotoScreen({super.key});
+  final String type; // Menambahkan parameter type di sini
+
+  const TakePhotoScreen({super.key, required this.type});
 
   @override
   State<TakePhotoScreen> createState() => _TakePhotoScreenState();
@@ -20,6 +23,9 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
   File? imageFile;
   ImageProvider? imagePreview;
   Future<void>? _initializeCameraFuture;
+  String currentTime = ''; // Variabel untuk menyimpan waktu saat gambar diambil
+  final ApiService apiService = ApiService(); // Tambahkan ApiService
+  bool isLoading = false; // Tambahkan loading state
 
   @override
   void initState() {
@@ -38,8 +44,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    if (!cameraController!.value.isInitialized ||
-        cameraController!.value.isRecordingVideo) {
+    if (!cameraController!.value.isInitialized || cameraController!.value.isRecordingVideo) {
       return;
     }
 
@@ -52,7 +57,12 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
 
   Future<void> initializeCamera() async {
     cameras = await availableCameras();
-    cameraController = CameraController(cameras[0], ResolutionPreset.medium);
+    final frontCamera = cameras.firstWhere(
+          (camera) => camera.lensDirection == CameraLensDirection.front,
+      orElse: () => cameras.first,
+    );
+
+    cameraController = CameraController(frontCamera, ResolutionPreset.medium);
 
     await cameraController?.initialize().then((_) {
       if (!mounted) {
@@ -82,27 +92,15 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
     setState(() {
       imageFile = file;
       imagePreview = FileImage(file);
+      currentTime = _formatCurrentTime();
       print('Preview diupdate dengan file baru: ${file.path}');
     });
   }
 
-  Widget imageTakenWidget() {
-    if (imageFile != null) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Image(
-          key: UniqueKey(),
-          image: FileImage(imageFile!),
-          width: 200,
-          height: 300,
-          fit: BoxFit.cover,
-        ),
-      );
-    } else {
-      return const Text('Tidak ada gambar yang diambil.');
-    }
+  String _formatCurrentTime() {
+    final now = DateTime.now();
+    return '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}:${now.second.toString().padLeft(2, '0')}';
   }
-
 
   Future<void> takePicture() async {
     if (!cameraController!.value.isInitialized) {
@@ -124,13 +122,125 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
     }
   }
 
+  Future<void> _attend(String type) async {
+    if (isLoading) return;
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      String latitude = "3.591903";
+      String longitude = "98.676726";
+
+      if (imageFile != null) {
+        var response = await apiService.attendance(latitude, longitude, type, imageFile!.path);
+
+        if (response.success) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${type == 'in' ? 'Check-in' : 'Check-out'} berhasil')),
+          );
+
+          context.read<AttendanceProvider>().loadAttendance();
+
+          Navigator.of(context).pop(true); // Kembali ke halaman sebelumnya dengan nilai true
+
+        } else {
+          _showErrorDialog(response.data.type);
+        }
+      } else {
+        _showErrorDialog('Gambar belum diambil');
+      }
+    } catch (e) {
+      _showErrorDialog('Error during $type attendance: $e');
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 30,
+                backgroundColor: Colors.red.shade100,
+                child: const Icon(Icons.error, size: 40, color: Colors.red),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'Error',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 8),
+              Text(
+                message,
+                style: const TextStyle(
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: const Text('Batal', style: TextStyle(fontSize: 16)),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget imageTakenWidget() {
+    if (imageFile != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Image(
+          key: UniqueKey(),
+          image: FileImage(imageFile!),
+          width: 200,
+          height: 300,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else {
+      return const Text('Tidak ada gambar yang diambil.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Catat Kehadiran"),
-      ),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).pop(false); // Kembali ke halaman sebelumnya dengan nilai false
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Catat Kehadiran ${widget.type == 'in' ? 'Masuk' : 'Keluar'}"), // Tampilkan type di judul
+        ),
         body: FutureBuilder<void>(
           future: _initializeCameraFuture,
           builder: (context, snapshot) {
@@ -162,7 +272,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           children: [
-                            Text(
+                            const Text(
                               'Gilbert Marpaung',
                               style: TextStyle(
                                 fontSize: 20,
@@ -172,7 +282,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                               softWrap: true,
                               overflow: TextOverflow.visible,
                             ),
-                            Text(
+                            const Text(
                               'Guru Bahasa Indonesia Kelas 10, 11, dan 12',
                               style: TextStyle(
                                 fontSize: 14,
@@ -183,7 +293,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                             Container(
                               width: 150,
                               height: 250,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
                               ),
                               clipBehavior: Clip.antiAlias,
@@ -191,19 +301,19 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                             ),
                             const SizedBox(height: 20,),
                             Text(
-                              'Jam Masuk',
-                              style: TextStyle(
+                              'Jam ${widget.type == 'in' ? 'Masuk' : 'Keluar'}',
+                              style: const TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey,
                               ),
                             ),
                             const SizedBox(height: 10,),
                             Text(
-                              '07:58:55',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold
+                              currentTime,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             const SizedBox(height: 20,),
@@ -214,8 +324,8 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                                 color: AppColors.cardLoc,
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
                               ),
-                              child: Row(
-                                children: const [
+                              child: const Row(
+                                children: [
                                   Icon(Icons.location_on_outlined, size: 25),
                                   SizedBox(width: 5),
                                   Flexible(
@@ -241,23 +351,29 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                           width: MediaQuery.sizeOf(context).width,
                           height: 56,
                           child: ElevatedButton.icon(
-                            onPressed: () {},
+                            onPressed: isLoading ? null : () {
+                              if (imageFile != null) {
+                                _attend(widget.type);
+                              } else {
+                                _showErrorDialog('Gambar belum diambil');
+                              }
+                            },
                             style: ButtonStyle(
-                                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                                backgroundColor: MaterialStateProperty.all<Color>(AppColors.primaryColor),
-                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                        side: BorderSide(color: AppColors.primaryColor)
-                                    )
-                                )
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(AppColors.primaryColor),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  side: const BorderSide(color: AppColors.primaryColor),
+                                ),
+                              ),
                             ),
                             icon: const Icon(Icons.logout, color: Colors.white),
-                            label: const Text('Catat Jam Masuk', style: TextStyle(color: Colors.white)),
+                            label: Text('Catat Jam ${widget.type == 'in' ? 'Masuk' : 'Keluar'}', style: const TextStyle(color: Colors.white)),
                           ),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ],
               );
@@ -266,6 +382,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
             }
           },
         ),
+      ),
     );
   }
 }

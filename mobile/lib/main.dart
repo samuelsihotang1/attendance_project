@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/provider/attendance_provider.dart';
 import 'package:mobile/screen/announcement_screen.dart';
 import 'package:mobile/screen/home_screen.dart';
 import 'package:mobile/screen/login_screen.dart';
 import 'package:mobile/screen/take_photo_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AttendanceProvider()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,7 +33,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home' : (context) => const HomeScreen(),
         '/announcement': (context) => const AnnouncementScreen(),
-        '/take-photo': (context) => const TakePhotoScreen(),
       },
     );
   }
