@@ -341,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
-                        'SMA NEGERI 1 SIANTAR NARUMONDA',
+                        'PERUSAHAAN LEBIH DARI 2 BARIS',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
