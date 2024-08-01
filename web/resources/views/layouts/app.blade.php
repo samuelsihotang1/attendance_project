@@ -82,7 +82,7 @@
                     </li>
                     <li class="nxl-item">
                         <a href="/office" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-map-pin"></i></span>
+                            <span class="nxl-micon"><i class="feather-home"></i></span>
                             <span class="nxl-mtext">Kantor</span><span class="nxl-arrow"><i
                                     class="feather-chevron-right"></i></span>
                         </a>
