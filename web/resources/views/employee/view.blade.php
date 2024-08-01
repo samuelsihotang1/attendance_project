@@ -99,7 +99,7 @@
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <div class="input-group-text"><i class="feather-home"></i></div>
                                             <select class="form-control bg-white" disabled>
                                                 <option data-icon="feather-home" selected>
                                                     {{ $this->user->office->name }}
