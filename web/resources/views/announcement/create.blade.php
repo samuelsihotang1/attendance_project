@@ -38,7 +38,7 @@
                                     <div class="col-lg-9">
 
                                         <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <div class="input-group-text"><i class="feather-home"></i></div>
                                             <select wire:model="office_id" id="office_idInput" class="form-control"
                                                 required pattern="^[a-zA-Z0-9\s]+$"
                                                 title="Hanya huruf, angka, dan spasi yang diizinkan.">
