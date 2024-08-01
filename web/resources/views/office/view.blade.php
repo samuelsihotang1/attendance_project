@@ -9,17 +9,16 @@
                             <div class="card-body personal-info">
                                 <div class="mb-4 d-flex align-items-center justify-content-between">
                                     <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Berita - {{ $this->announcement->title }}</span>
+                                        <span class="d-block mb-2">Kantor - {{ $this->office->name }}</span>
                                     </h5>
                                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
                                         <button type="button" wire:click="destroy"
-                                            wire:confirm="Apakah kamu yakin ingin menghapus berita {{ $this->announcement->title }}?"
+                                            wire:confirm="Apakah kamu yakin ingin menghapus kantor {{ $this->office->name }}?"
                                             class="btn btn-light-brand">
                                             <i class="feather-layers me-2"></i>
                                             <span>Hapus</span>
                                         </button>
-                                        <a href="{{route('announcement.edit', $this->announcement->slug)}}"
-                                            class="btn btn-primary">
+                                        <a href="{{route('office.edit', $this->office->slug)}}" class="btn btn-primary">
                                             <i class="feather-edit me-2"></i>
                                             <span>Edit</span>
                                         </a>
@@ -29,47 +28,104 @@
                                 {{-- Name --}}
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-3">
-                                        <label for="nameInput" class="fw-semibold">Judul: </label>
+                                        <label for="nameInput" class="fw-semibold">Nama: </label>
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-type"></i></div>
-                                            <input value="{{ $this->announcement->title }}" type="text"
-                                                class="form-control bg-white" placeholder="Judul" disabled>
+                                            <input value="{{$office->name}}" id="nameInput" type="text" class="form-control bg-white"
+                                                placeholder="Nama" disabled>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- Office --}}
+                                {{-- Address --}}
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-3">
-                                        <label class="fw-semibold" for="office_idInput">Kantor: </label>
+                                        <label for="addressInput" class="fw-semibold">Alamat: </label>
                                     </div>
                                     <div class="col-lg-9">
-
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-map"></i></div>
+                                            <input value="{{$office->address}}" id="addressInput" type="text"
+                                                class="form-control bg-white" placeholder="Alamat" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Latitude --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="latitudeInput" class="fw-semibold">Koordinat Latitude: </label>
+                                    </div>
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-map-pin"></i></div>
-                                            <select id="office_idInput" class="form-control bg-white"
-                                                pattern="^[a-zA-Z0-9\s]+$"
-                                                title="Hanya huruf, angka, dan spasi yang diizinkan." disabled>
-                                                <option value="{{ $this->announcement->office->id }}"
-                                                    data-icon="feather-home" selected>{{
-                                                    $this->announcement->office->name }}
-                                                </option>
-                                            </select>
+                                            <input value="{{$office->latitude}}" id="latitudeInput" type="text"
+                                                class="form-control bg-white" placeholder="1.234567" disabled>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- content --}}
+                                {{-- Longitude --}}
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-3">
-                                        <label for="contentInput" class="fw-semibold">Konten: </label>
+                                        <label for="longitudeInput" class="fw-semibold">Koordinat Longitude: </label>
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-message-square"></i></div>
-                                            <textarea class="form-control bg-white" id="contentInput" cols="30"
-                                                rows="10" placeholder="Konten"
-                                                disabled>{{{ $this->announcement->content }}}</textarea>
+                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <input value="{{$office->longitude}}" id="longitudeInput" type="text"
+                                                class="form-control bg-white" placeholder="7.654321" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Start Open --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="start_openInput" class="fw-semibold">Awal Jam Masuk: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input value="{{$office->start_open}}" id="start_openInput" type="time"
+                                                class="form-control bg-white" placeholder="06:00" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Open --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="end_openInput" class="fw-semibold">Akhir Jam Masuk: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input value="{{$office->end_open}}" id="end_openInput" type="time"
+                                                class="form-control bg-white" placeholder="08:00" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- Start Close --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="start_closeInput" class="fw-semibold">Awal Jam Pulang: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input value="{{$office->start_close}}" id="start_closeInput" type="time"
+                                                class="form-control bg-white" placeholder="17:00" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- End Close --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="end_closeInput" class="fw-semibold">Akhir Jam Pulang: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input value="{{$office->end_close}}" id="end_closeInput" type="time"
+                                                class="form-control bg-white" placeholder="20:00" disabled>
                                         </div>
                                     </div>
                                 </div>

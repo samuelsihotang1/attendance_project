@@ -9,11 +9,11 @@
                             <form wire:submit.prevent="store" class="card-body personal-info">
                                 <div class="mb-4 d-flex align-items-center justify-content-between">
                                     <h5 class="fw-bold mb-0 me-4">
-                                        <span class="d-block mb-2">Edit berita - {{ $this->title }}:</span>
+                                        <span class="d-block mb-2">Edit Kantor - {{ $this->name }}:</span>
                                     </h5>
                                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
                                         <button type="button" wire:click="destroy"
-                                            wire:confirm="Apakah kamu yakin ingin menghapus berita {{ $this->title }}?"
+                                            wire:confirm="Apakah kamu yakin ingin menghapus kantor {{ $this->name }}?"
                                             class="btn btn-light-brand">
                                             <i class="feather-layers me-2"></i>
                                             <span>Hapus</span>
@@ -28,53 +28,113 @@
                                 {{-- Name --}}
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-3">
-                                        <label for="nameInput" class="fw-semibold">Judul: </label>
+                                        <label for="nameInput" class="fw-semibold">Nama: </label>
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-type"></i></div>
-                                            <input wire:model="title" type="text" class="form-control"
-                                                placeholder="Judul">
+                                            <input wire:model="name" id="nameInput" type="text" class="form-control"
+                                                placeholder="Nama">
                                         </div>
-                                        @error('title') <span class="error">{{ $message }}</span> @enderror
+                                        @error('name') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                {{-- Office --}}
+                                {{-- Address --}}
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-3">
-                                        <label class="fw-semibold" for="office_idInput">Kantor: </label>
+                                        <label for="addressInput" class="fw-semibold">Alamat: </label>
                                     </div>
                                     <div class="col-lg-9">
-
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-map"></i></div>
+                                            <input wire:model="address" id="addressInput" type="text"
+                                                class="form-control" placeholder="Alamat">
+                                        </div>
+                                        @error('address') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                {{-- Latitude --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="latitudeInput" class="fw-semibold">Koordinat Latitude: </label>
+                                    </div>
+                                    <div class="col-lg-9">
                                         <div class="input-group">
                                             <div class="input-group-text"><i class="feather-map-pin"></i></div>
-                                            <select wire:model="office_id" id="office_idInput" class="form-control"
-                                                required pattern="^[a-zA-Z0-9\s]+$"
-                                                title="Hanya huruf, angka, dan spasi yang diizinkan.">
-                                                @foreach ($this->offices as $office)
-                                                <option value="{{ $office->id }}" data-icon="feather-home" {{ $office->
-                                                    id ==
-                                                    $this->my_office_id ? 'selected' : '' }}>{{
-                                                    $office->name }}
-                                                </option>
-                                                @endforeach
-                                            </select>
+                                            <input wire:model="latitude" id="latitudeInput" type="text"
+                                                class="form-control" placeholder="1.234567">
                                         </div>
-                                        @error('office_id') <span class="error">{{ $message }}</span> @enderror
+                                        @error('latitude') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
-                                {{-- content --}}
+                                {{-- Longitude --}}
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-lg-3">
-                                        <label for="contentInput" class="fw-semibold">Konten: </label>
+                                        <label for="longitudeInput" class="fw-semibold">Koordinat Longitude: </label>
                                     </div>
                                     <div class="col-lg-9">
                                         <div class="input-group">
-                                            <div class="input-group-text"><i class="feather-message-square"></i></div>
-                                            <textarea wire:model="content" class="form-control" id="contentInput"
-                                                cols="30" rows="10" placeholder="Konten"></textarea>
+                                            <div class="input-group-text"><i class="feather-map-pin"></i></div>
+                                            <input wire:model="longitude" id="longitudeInput" type="text"
+                                                class="form-control" placeholder="7.654321">
                                         </div>
-                                        @error('content') <span class="error">{{ $message }}</span> @enderror
+                                        @error('longitude') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                {{-- Start Open --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="start_openInput" class="fw-semibold">Awal Jam Masuk: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input wire:model="start_open" id="start_openInput" type="time"
+                                                class="form-control" placeholder="06:00">
+                                        </div>
+                                        @error('start_open') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                {{-- End Open --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="end_openInput" class="fw-semibold">Akhir Jam Masuk: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input wire:model="end_open" id="end_openInput" type="time"
+                                                class="form-control" placeholder="08:00">
+                                        </div>
+                                        @error('end_open') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                {{-- Start Close --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="start_closeInput" class="fw-semibold">Awal Jam Pulang: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input wire:model="start_close" id="start_closeInput" type="time"
+                                                class="form-control" placeholder="17:00">
+                                        </div>
+                                        @error('start_close') <span class="error">{{ $message }}</span> @enderror
+                                    </div>
+                                </div>
+                                {{-- End Close --}}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-lg-3">
+                                        <label for="end_closeInput" class="fw-semibold">Akhir Jam Pulang: </label>
+                                    </div>
+                                    <div class="col-lg-9">
+                                        <div class="input-group">
+                                            <div class="input-group-text"><i class="feather-clock"></i></div>
+                                            <input wire:model="end_close" id="end_closeInput" type="time"
+                                                class="form-control" placeholder="20:00">
+                                        </div>
+                                        @error('end_close') <span class="error">{{ $message }}</span> @enderror
                                     </div>
                                 </div>
                             </form>

@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Office;
 
-use App\Models\Announcement;
 use App\Models\Office;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
@@ -12,66 +11,77 @@ class EditOffice extends Component
 {
     use WithFileUploads;
 
-    public $title;
-    public $content;
-    public $offices;
-    public $office_id;
-    public $my_office_id;
-    public Announcement $announcement;
+    public $name;
+    public $address;
+    public $latitude;
+    public $longitude;
+    public $start_open;
+    public $end_open;
+    public $start_close;
+    public $end_close;
+    public Office $office;
 
     public function mount($slug)
     {
-        $this->announcement = Announcement::whereSlug($slug)->firstOrFail();
-        $this->dataFromAnnouncement();
+        $this->office = Office::whereSlug($slug)->firstOrFail();
+        $this->dataFromOffice();
     }
 
     public function render()
     {
-        $this->getOffices();
-        return view('office.edit')->title("Edit Berita - " . $this->announcement->title);
+        return view('office.edit')->title("Edit Kantor - " . $this->office->name);
     }
 
-    protected function getOffices()
+    protected function dataFromOffice()
     {
-        $this->offices = Office::all();
+        $this->name = $this->office->name;
+        $this->address = $this->office->address;
+        $this->latitude = $this->office->latitude;
+        $this->longitude = $this->office->longitude;
+        $this->start_open = $this->office->start_open;
+        $this->end_open = $this->office->end_open;
+        $this->start_close = $this->office->start_close;
+        $this->end_close = $this->office->end_close;
     }
 
-    protected function dataFromAnnouncement()
+    protected function dataToOffice()
     {
-        $this->title = $this->announcement->title;
-        $this->content = $this->announcement->content;
-        $this->office_id = $this->announcement->office_id;
-    }
-
-    protected function dataToAnnouncement()
-    {
-        $this->announcement->title = $this->title;
-        $this->announcement->content = $this->content;
-        $this->announcement->office_id = $this->office_id;
-        $this->announcement->slug = Str::slug($this->title);
+        $this->office->name = $this->name;
+        $this->office->address = $this->address;
+        $this->office->latitude = $this->latitude;
+        $this->office->longitude = $this->longitude;
+        $this->office->start_open = $this->start_open;
+        $this->office->end_open = $this->end_open;
+        $this->office->start_close = $this->start_close;
+        $this->office->end_close = $this->end_close;
     }
 
     public function store()
     {
         $this->validate();
-        $this->dataToAnnouncement();
-        $this->announcement->save();
+        $this->dataToOffice();
+        $this->office->save();
 
-        return redirect()->route('announcement');
+        return redirect()->route('office');
     }
 
     public function destroy()
     {
-        $this->announcement->delete();
-        return redirect()->route('announcement');
+        $this->office->delete();
+        return redirect()->route('office');
     }
 
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
-            'content' => 'required|string|max:255',
-            'office_id' => 'required|exists:offices,id',
+            'name' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'latitude' => ['required', 'numeric', 'between:-90,90'],
+            'longitude' => ['required', 'numeric', 'between:-180,180'],
+            'start_open' => 'required|date_format:H:i',
+            'end_open' => 'required|date_format:H:i|after:start_open',
+            'start_close' => 'required|date_format:H:i|after:end_open',
+            'end_close' => 'required|date_format:H:i|after:start_close',
         ];
     }
 }

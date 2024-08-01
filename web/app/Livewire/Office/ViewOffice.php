@@ -2,26 +2,26 @@
 
 namespace App\Livewire\Office;
 
-use App\Models\Announcement;
+use App\Models\Office;
 use Livewire\Component;
 
 class ViewOffice extends Component
 {
-    public Announcement $announcement;
+    public Office $office;
 
     public function mount($slug)
     {
-        $this->announcement = Announcement::whereSlug($slug)->firstOrFail();
+        $this->office = Office::whereSlug($slug)->firstOrFail();
     }
 
     public function render()
     {
-        return view('office.view')->title("Berita - " . $this->announcement->title);
+        return view('office.view')->title("Kantor - " . $this->office->name);
     }
 
     public function destroy()
     {
-        $this->announcement->delete();
-        return redirect()->route('announcement');
+        $this->office->delete();
+        return redirect()->route('office');
     }
 }

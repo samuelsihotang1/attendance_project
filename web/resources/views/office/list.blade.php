@@ -11,7 +11,7 @@
                         </a>
                     </div>
                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                        <a href="/announcement/create" class="btn btn-primary">
+                        <a href="/office/create" class="btn btn-primary">
                             <i class="feather-plus me-2"></i>
                             <span>Tambah Kantor</span>
                         </a>
