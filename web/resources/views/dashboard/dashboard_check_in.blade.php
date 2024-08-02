@@ -29,6 +29,10 @@
                                 @endforeach
                             </div>
                         </div>
+                        <div class="dropdown">
+                            <input wire:model.live="date" type="date" class="btn btn-primary">
+                            </input>
+                        </div>
                     </div>
                 </div>
                 <div class="d-md-none d-flex align-items-center">
@@ -45,7 +49,7 @@
                 <div class="col-xxl-3 col-md-8">
                     <div class="card stretch stretch-full">
                         <div class="card-header">
-                            <h5 class="card-title">Karyawan yang masuk hari ini - {{ $this->presentUsers->count() }}/{{
+                            <h5 class="card-title">Karyawan yang masuk - {{ $this->presentUsers->count() }}/{{
                                 $this->presentUsers->count() + $this->absentUsers->count() }}</h5>
                             <div class="card-header-action">
                                 <div class="dropdown">
@@ -90,17 +94,17 @@
                                                     </a>
                                                 </div>
                                             </td>
-                                            <td> {{ $user->attendancesInToday[0]->created_at->format('H:i') }}</td>
+                                            <td> {{ $user->attendanceData[0]->created_at->format('H:i') }}</td>
                                             <td>
-                                                @if ($user->attendancesInToday[0]->time_deviation == 0)
+                                                @if ($user->attendanceData[0]->time_deviation == 0)
                                                 <span class="badge bg-soft-success text-success">
                                                     Tepat Waktu
                                                 </span>
-                                                @elseif($user->attendancesInToday[0]->time_deviation > 0)
+                                                @elseif($user->attendanceData[0]->time_deviation > 0)
                                                 <span class="badge bg-soft-warning text-danger">
                                                     Terlambat
                                                 </span>
-                                                @elseif($user->attendancesInToday[0]->time_deviation < 0) <span
+                                                @elseif($user->attendanceData[0]->time_deviation < 0) <span
                                                     class="badge bg-soft-warning text-danger">
                                                     Terlalu Cepat
                                                     </span>
@@ -109,9 +113,9 @@
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="wd-50 ht-50 rounded-2">
-                                                        <a href="{{url('assets/images/attendance/' . $user->attendancesInToday[0]->image)}}"
+                                                        <a href="{{url('assets/images/attendance/' . $user->attendanceData[0]->image)}}"
                                                             target="_blank">
-                                                            <img src="{{url('assets/images/attendance/' . $user->attendancesInToday[0]->image)}}"
+                                                            <img src="{{url('assets/images/attendance/' . $user->attendanceData[0]->image)}}"
                                                                 alt="" class="img-fluid" />
                                                         </a>
                                                     </div>

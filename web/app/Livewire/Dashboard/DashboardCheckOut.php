@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Attendance;
 use App\Models\Office;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -14,10 +15,19 @@ class DashboardCheckOut extends Component
     public $offices;
     public $my_office;
     public $office_id;
+    public $date;
 
     public function mount()
     {
         $this->office_id = Auth::user()->office_id;
+        $this->date = date('Y-m-d');
+    }
+
+    public function updating($property, $value)
+    {
+        if ($property === 'date') {
+            $this->getUsers();
+        }
     }
 
     public function getData()
@@ -35,14 +45,26 @@ class DashboardCheckOut extends Component
 
     protected function getUsers()
     {
-        $users = User::where('office_id', $this->office_id)->with('attendancesOutToday')->get();
+        $date = $this->date;
+        $users = User::where('office_id', $this->office_id)->get();
 
-        $this->presentUsers = $users->filter(function ($user) {
-            return !$user->attendancesOutToday->isEmpty();
+        $userIds = $users->pluck('id')->toArray();
+
+        $attendances = Attendance::whereIn('user_id', $userIds)
+            ->where('type', 'out')
+            ->whereDate('created_at', $date)
+            ->get()
+            ->groupBy('user_id');
+
+        $this->presentUsers = $users->map(function ($user) use ($attendances) {
+            $user->attendanceData = $attendances->get($user->id, collect());
+            return $user;
+        })->filter(function ($user) {
+            return $user->attendanceData->isNotEmpty();
         });
 
-        $this->absentUsers = $users->filter(function ($user) {
-            return $user->attendancesOutToday->isEmpty();
+        $this->absentUsers = $users->filter(function ($user) use ($attendances) {
+            return !$attendances->has($user->id);
         });
     }
 
