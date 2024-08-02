@@ -2,13 +2,14 @@ import 'office.dart';
 
 class User {
   final int id;
-  final int officeId;
+  final String officeId;
   final String name;
   final String nip;
   final String photo;
   final String rank;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
+  final String role;
+  final String createdAt;
+  final String updatedAt;
   final Office office;
 
   User({
@@ -18,8 +19,9 @@ class User {
     required this.nip,
     required this.photo,
     required this.rank,
-    this.createdAt,
-    this.updatedAt,
+    required this.role,
+    required this.createdAt,
+    required this.updatedAt,
     required this.office,
   });
 
@@ -31,8 +33,9 @@ class User {
       nip: json['nip'],
       photo: json['photo'],
       rank: json['rank'],
-      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
-      updatedAt: json['updated_at'] != null ? DateTime.parse(json['updated_at']) : null,
+      role: json['role'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
       office: Office.fromJson(json['office']),
     );
   }
@@ -45,10 +48,10 @@ class User {
       'nip': nip,
       'photo': photo,
       'rank': rank,
-      'created_at': createdAt?.toIso8601String(),
-      'updated_at': updatedAt?.toIso8601String(),
+      'role': role,
+      'created_at': createdAt,
+      'updated_at': updatedAt,
       'office': office.toJson(),
     };
   }
-
 }

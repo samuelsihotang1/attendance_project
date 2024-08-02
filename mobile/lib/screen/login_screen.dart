@@ -19,6 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   bool _autoValidate = false;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -48,6 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState != null) {
       _formKey.currentState!.validate();
     }
+  }
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 
   @override
@@ -88,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         const SizedBox(height: 10),
                         TextFormField(
                           controller: _nipController,
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.multiline,
                           decoration: InputDecoration(
                             hintText: 'Enter Your NIP here',
                             prefixIcon: const Icon(Icons.person_outline),
@@ -118,10 +125,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(
                           controller: _passwordController,
                           keyboardType: TextInputType.visiblePassword,
-                          obscureText: true,
+                          obscureText: _obscureText,
                           decoration: InputDecoration(
                             hintText: 'Enter Your Password here',
                             prefixIcon: const Icon(Icons.lock_outline),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText ? Icons.visibility_off : Icons.visibility,
+                              ),
+                              onPressed: _togglePasswordVisibility,
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -182,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
           _showErrorMessage(loginResponse.message);
         }
       } catch (e) {
-        _showErrorMessage('Gagal Login: $e');
+        _showErrorMessage('NIP atau Password tidak sesuai kredensial');
       } finally {
         setState(() {
           _isLoading = false;

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mobile/config.dart';
 import 'package:mobile/model/User.dart';
+import 'package:mobile/model/response/attendance_record_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../model/announcement_response.dart';
 import '../model/attandance_data_response.dart';
@@ -191,7 +192,31 @@ class ApiService {
     }
   }
 
-  Future<AttendanceDataResponse?> getAttendance() async {
+  Future<AttendanceRecordDataResponse?> getAttendance() async {
+    var url = Uri.parse('${Config.API_URL}${Config.getAttendance}');
+    if (token.isEmpty) await _loadToken();
+
+    try {
+      var response = await client.get(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return AttendanceRecordDataResponse.fromJson(jsonDecode(response.body));
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching attendance: $e');
+      return null;
+    }
+  }
+
+  Future<AttendanceRecordDataResponse?> getFewAttendance() async {
     var url = Uri.parse('${Config.API_URL}${Config.getFewAttendance}');
     if (token.isEmpty) await _loadToken();
 
@@ -205,7 +230,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        return AttendanceDataResponse.fromJson(jsonDecode(response.body));
+        return AttendanceRecordDataResponse.fromJson(jsonDecode(response.body));
       } else {
         return null;
       }

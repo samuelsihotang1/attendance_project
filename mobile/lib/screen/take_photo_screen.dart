@@ -1,15 +1,17 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:image/image.dart' as img;
+import 'package:mobile/model/User.dart';
 import 'package:mobile/style/color.dart';
 import 'package:mobile/service/api_service.dart';
 import 'package:provider/provider.dart';
 import 'package:mobile/provider/attendance_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TakePhotoScreen extends StatefulWidget {
-  final String type; // Menambahkan parameter type di sini
+  final String type;
 
   const TakePhotoScreen({super.key, required this.type});
 
@@ -18,14 +20,15 @@ class TakePhotoScreen extends StatefulWidget {
 }
 
 class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingObserver {
+  User? user;
   late List<CameraDescription> cameras;
   CameraController? cameraController;
   File? imageFile;
   ImageProvider? imagePreview;
   Future<void>? _initializeCameraFuture;
-  String currentTime = ''; // Variabel untuk menyimpan waktu saat gambar diambil
-  final ApiService apiService = ApiService(); // Tambahkan ApiService
-  bool isLoading = false; // Tambahkan loading state
+  String currentTime = '';
+  final ApiService apiService = ApiService();
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -52,6 +55,17 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
       cameraController?.dispose();
     } else if (state == AppLifecycleState.resumed) {
       _initializeCameraFuture = initializeCamera();
+    }
+  }
+
+  Future<void> _loadUserData() async {
+    final SharedPreferences sp = await SharedPreferences.getInstance();
+    String? userJson = sp.getString('userData');
+    if (userJson != null) {
+      Map<String, dynamic> userMap = jsonDecode(userJson);
+      setState(() {
+        user = User.fromJson(userMap);
+      });
     }
   }
 
@@ -131,8 +145,8 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
 
     try {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      String latitude = "3.591903";
-      String longitude = "98.676726";
+      String latitude = position.latitude.toString();
+      String longitude = position.longitude.toString();
 
       if (imageFile != null) {
         var response = await apiService.attendance(latitude, longitude, type, imageFile!.path);
@@ -144,7 +158,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
 
           context.read<AttendanceProvider>().loadAttendance();
 
-          Navigator.of(context).pop(true); // Kembali ke halaman sebelumnya dengan nilai true
+          Navigator.of(context).pop(true);
 
         } else {
           _showErrorDialog(response.data.type);
@@ -234,12 +248,12 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).pop(false); // Kembali ke halaman sebelumnya dengan nilai false
+        Navigator.of(context).pop(false);
         return false;
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Catat Kehadiran ${widget.type == 'in' ? 'Masuk' : 'Keluar'}"), // Tampilkan type di judul
+          title: Text("Catat Kehadiran ${widget.type == 'in' ? 'Masuk' : 'Keluar'}"),
         ),
         body: FutureBuilder<void>(
           future: _initializeCameraFuture,
@@ -272,9 +286,9 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                         padding: const EdgeInsets.all(10),
                         child: Column(
                           children: [
-                            const Text(
-                              'Gilbert Marpaung',
-                              style: TextStyle(
+                            Text(
+                              user?.name ?? "Guest",
+                              style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
@@ -282,9 +296,9 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                               softWrap: true,
                               overflow: TextOverflow.visible,
                             ),
-                            const Text(
-                              'Guru Bahasa Indonesia Kelas 10, 11, dan 12',
-                              style: TextStyle(
+                            Text(
+                              user?.rank ?? "None",
+                              style: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.black,
                               ),
@@ -324,14 +338,14 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                                 color: AppColors.cardLoc,
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
                               ),
-                              child: const Row(
+                              child: Row(
                                 children: [
-                                  Icon(Icons.location_on_outlined, size: 25),
-                                  SizedBox(width: 5),
+                                  const Icon(Icons.location_on_outlined, size: 25),
+                                  const SizedBox(width: 5),
                                   Flexible(
                                     child: Text(
-                                      'Kantor 1 - Jl.Sisingamangaraja Sitoluama, Laguboti, Toba Samosir 22381, Sumatera Utara - Indonesia',
-                                      style: TextStyle(fontSize: 11, color: Colors.black),
+                                      user?.office.address ?? "none",
+                                      style: const TextStyle(fontSize: 11, color: Colors.black),
                                       softWrap: true,
                                       overflow: TextOverflow.visible,
                                     ),
@@ -368,7 +382,16 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
                                 ),
                               ),
                             ),
-                            icon: const Icon(Icons.logout, color: Colors.white),
+                            icon: isLoading
+                                ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                                : const Icon(Icons.logout, color: Colors.white),
                             label: Text('Catat Jam ${widget.type == 'in' ? 'Masuk' : 'Keluar'}', style: const TextStyle(color: Colors.white)),
                           ),
                         ),

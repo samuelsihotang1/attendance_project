@@ -24,61 +24,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
     _getAnnouncement();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Pengumuman"),
-      ),
-      body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : announcements.isEmpty
-          ? const Center(child: Text('Tidak ada pengumuman'))
-          : ListView.builder(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemCount: announcements.length,
-        itemBuilder: (context, index) {
-          return Container(
-            width: MediaQuery.sizeOf(context).width,
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              border: Border.all(color: AppColors.cardLoc),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  spreadRadius: 5,
-                  blurRadius: 7,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    announcements[index].title,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    announcements[index].content,
-                    style: const TextStyle(fontSize: 16,),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  void _getAnnouncement() async {
+  Future<void> _getAnnouncement() async {
     try {
       AnnouncementResponse ar = await apiService.getAllAnnouncement();
       if (ar.success) {
@@ -104,4 +50,67 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
       ));
     }
   }
+
+  Future<void> _refreshAnnouncement() async {
+    setState(() {
+      isLoading = true;
+    });
+    await _getAnnouncement();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Pengumuman"),
+      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : RefreshIndicator(
+        onRefresh: _refreshAnnouncement,
+        child: announcements.isEmpty
+            ? const Center(child: Text('Tidak ada pengumuman'))
+            : ListView.builder(
+          itemCount: announcements.length,
+          itemBuilder: (context, index) {
+            return Container(
+              width: MediaQuery.sizeOf(context).width,
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                border: Border.all(color: AppColors.cardLoc),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      announcements[index].title,
+                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      announcements[index].content,
+                      style: const TextStyle(fontSize: 16,),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      )
+    );
+  }
+
 }
