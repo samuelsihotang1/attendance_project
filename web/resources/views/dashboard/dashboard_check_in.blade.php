@@ -42,7 +42,7 @@
         <div class="main-content">
             <div class="row">
                 <!-- [Hadir] start -->
-                <div class="col-xxl-3 col-md-6">
+                <div class="col-xxl-3 col-md-8">
                     <div class="card stretch stretch-full">
                         <div class="card-header">
                             <h5 class="card-title">Karyawan yang masuk hari ini - {{ $this->presentUsers->count() }}/{{
@@ -71,6 +71,7 @@
                                             @if (count($this->presentUsers) != 0)
                                             <th>Waktu</th>
                                             <th>Status</th>
+                                            <th>Bukti Foto</th>
                                             @endif
                                         </tr>
                                     </thead>
@@ -99,11 +100,19 @@
                                                 <span class="badge bg-soft-warning text-danger">
                                                     Terlambat
                                                 </span>
-                                                @elseif($user->attendancesInToday[0]->time_deviation < 0)
-                                                <span class="badge bg-soft-warning text-danger">
+                                                @elseif($user->attendancesInToday[0]->time_deviation < 0) <span
+                                                    class="badge bg-soft-warning text-danger">
                                                     Terlalu Cepat
-                                                </span>
-                                                @endif
+                                                    </span>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="wd-50 ht-50 rounded-2">
+                                                        <img src="{{url('assets/images/attendance/' . $user->attendancesInToday[0]->image)}}"
+                                                            alt="" class="img-fluid" />
+                                                        </a>
+                                                    </div>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -125,7 +134,7 @@
                 <!-- [Hadir] start -->
 
                 <!-- [Tidak Hadir] start -->
-                <div class="col-xxl-3 col-md-6">
+                <div class="col-xxl-3 col-md-4">
                     <div class="card stretch stretch-full">
                         <div class="card-header">
                             <h5 class="card-title">Tidak masuk - {{ $this->absentUsers->count() }}/{{
