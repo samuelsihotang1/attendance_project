@@ -9,10 +9,10 @@ use Livewire\Component;
 
 class ListEmployee extends Component
 {
-    protected $users;
-    protected $offices;
-    protected $my_office;
-    protected $office_id;
+    public $users;
+    public $offices;
+    public $my_office;
+    public $office_id;
 
     public function mount()
     {

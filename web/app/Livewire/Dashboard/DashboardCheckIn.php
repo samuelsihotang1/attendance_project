@@ -9,15 +9,17 @@ use Livewire\Component;
 
 class DashboardCheckIn extends Component
 {
-    protected $presentUsers;
-    protected $absentUsers;
-    protected $offices;
-    protected $my_office;
-    protected $office_id;
+    public $presentUsers;
+    public $absentUsers;
+    public $offices;
+    public $my_office;
+    public $office_id;
+    public $date;
 
     public function mount()
     {
         $this->office_id = Auth::user()->office_id;
+        $this->date = date('Y-m-d');
     }
 
     public function getData()

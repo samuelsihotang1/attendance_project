@@ -9,11 +9,11 @@ use Livewire\Component;
 
 class DashboardCheckOut extends Component
 {
-    protected $presentUsers;
-    protected $absentUsers;
-    protected $offices;
-    protected $my_office;
-    protected $office_id;
+    public $presentUsers;
+    public $absentUsers;
+    public $offices;
+    public $my_office;
+    public $office_id;
 
     public function mount()
     {

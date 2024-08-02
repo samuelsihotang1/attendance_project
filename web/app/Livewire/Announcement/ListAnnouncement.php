@@ -10,10 +10,10 @@ use Livewire\Component;
 
 class ListAnnouncement extends Component
 {
-    protected $announcements;
-    protected $offices;
-    protected $my_office;
-    protected $office_id;
+    public $announcements;
+    public $offices;
+    public $my_office;
+    public $office_id;
 
     public function mount()
     {

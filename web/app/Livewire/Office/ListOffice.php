@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class ListOffice extends Component
 {
-    protected $offices;
+    public $offices;
 
     public function getData()
     {
