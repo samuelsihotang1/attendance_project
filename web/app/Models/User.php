@@ -59,29 +59,13 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 
-    public function attendancesIn()
+    public function attendancesIn(): HasMany
     {
         return $this->hasMany(Attendance::class)->where('type', 'in')->orderBy('created_at', 'desc');
     }
 
-    public function attendancesOut()
+    public function attendancesOut(): HasMany
     {
         return $this->hasMany(Attendance::class)->where('type', 'out')->orderBy('created_at', 'desc');
-    }
-
-    public function attendancesInToday(): HasMany
-    {
-        return $this->hasMany(Attendance::class)
-            ->where('created_at', '>=', Carbon::today()->startOfDay())
-            ->where('created_at', '<=', Carbon::today()->endOfDay())
-            ->where('type', 'in');
-    }
-
-    public function attendancesOutToday(): HasMany
-    {
-        return $this->hasMany(Attendance::class)
-            ->where('created_at', '>=', Carbon::today()->startOfDay())
-            ->where('created_at', '<=', Carbon::today()->endOfDay())
-            ->where('type', 'out');
     }
 }
