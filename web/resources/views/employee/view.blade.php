@@ -129,6 +129,174 @@
                     </div>
                 </div>
             </div>
+            {{-- --}}
+
+            <div class="row">
+                <!-- [Hadir] start -->
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Absen Masuk</h5>
+                            <div class="card-header-action">
+                                <div class="dropdown">
+                                    <div data-bs-toggle="tooltip" title="Refresh">
+                                        <a wire:click="getData" href="javascript:void(0);"
+                                            class="avatar-text avatar-xs bg-warning"> </a>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <div data-bs-toggle="tooltip" title="Maximize/Minimize">
+                                        <a href="javascript:void(0);" class="avatar-text avatar-xs bg-success"
+                                            data-bs-toggle="expand"> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body custom-card-action p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr class="border-b">
+                                            @if (count($this->in) > 0)
+                                            <th>Tanggal</th>
+                                            <th>Status</th>
+                                            <th>Bukti Foto</th>
+                                            @else
+                                            <th>Status</th>
+                                            @endif
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($this->in as $attendance)
+                                        <tr wire:key="{{ $attendance->id }}">
+                                            <td> {{ $attendance->created_at->translatedFormat('l, d F Y H:i') }}</td>
+                                            <td>
+                                                @if ($attendance->time_deviation == 0)
+                                                <span class="badge bg-soft-success text-success">
+                                                    Tepat Waktu
+                                                </span>
+                                                @elseif($attendance->time_deviation > 0)
+                                                <span class="badge bg-soft-warning text-danger">
+                                                    Terlambat
+                                                </span>
+                                                @elseif($attendance->time_deviation < 0) <span
+                                                    class="badge bg-soft-warning text-danger">
+                                                    Terlalu Cepat
+                                                    </span>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="wd-50 ht-50 rounded-2">
+                                                        <a href="{{url('assets/images/attendance/' . $attendance->image)}}"
+                                                            target="_blank">
+                                                            <img src="{{url('assets/images/attendance/' . $attendance->image)}}"
+                                                                alt="" class="img-fluid" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @if (count($this->in) == 0)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center gap-3">
+                                                    <span class="d-block">Belum pernah absen</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Hadir] start -->
+                <!-- [Hadir] pulang start -->
+                <div class="col-xxl-3 col-md-6">
+                    <div class="card stretch stretch-full">
+                        <div class="card-header">
+                            <h5 class="card-title">Absen Pulang</h5>
+                            <div class="card-header-action">
+                                <div class="dropdown">
+                                    <div data-bs-toggle="tooltip" title="Refresh">
+                                        <a wire:click="getData" href="javascript:void(0);"
+                                            class="avatar-text avatar-xs bg-warning"> </a>
+                                    </div>
+                                </div>
+                                <div class="dropdown">
+                                    <div data-bs-toggle="tooltip" title="Maximize/Minimize">
+                                        <a href="javascript:void(0);" class="avatar-text avatar-xs bg-success"
+                                            data-bs-toggle="expand"> </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body custom-card-action p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr class="border-b">
+                                            @if (count($this->out) > 0)
+                                            <th>Tanggal</th>
+                                            <th>Status</th>
+                                            <th>Bukti Foto</th>
+                                            @else
+                                            <th>Status</th>
+                                            @endif
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($this->out as $attendance)
+                                        <tr wire:key="{{ $attendance->id }}">
+                                            <td> {{ $attendance->created_at->translatedFormat('l, d F Y H:i') }}</td>
+                                            <td>
+                                                @if ($attendance->time_deviation == 0)
+                                                <span class="badge bg-soft-success text-success">
+                                                    Tepat Waktu
+                                                </span>
+                                                @elseif($attendance->time_deviation > 0)
+                                                <span class="badge bg-soft-warning text-danger">
+                                                    Terlambat
+                                                </span>
+                                                @elseif($attendance->time_deviation < 0) <span
+                                                    class="badge bg-soft-warning text-danger">
+                                                    Terlalu Cepat
+                                                    </span>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="wd-50 ht-50 rounded-2">
+                                                        <a href="{{url('assets/images/attendance/' . $attendance->image)}}"
+                                                            target="_blank">
+                                                            <img src="{{url('assets/images/attendance/' . $attendance->image)}}"
+                                                                alt="" class="img-fluid" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @if (count($this->out) == 0)
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex justify-content-center align-items-center gap-3">
+                                                    <span class="d-block">Belum pernah absen</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- [Hadir] pulang start -->
+            </div>
         </div>
         <!-- [ Main Content ] end -->
     </div>

@@ -2,16 +2,21 @@
 
 namespace App\Livewire\Employee;
 
+use App\Models\Attendance;
 use App\Models\User;
 use Livewire\Component;
 
 class ViewEmployee extends Component
 {
     public User $user;
+    public $in;
+    public $out;
 
     public function mount($nip)
     {
-        $this->user = User::whereNip($nip)->firstOrFail();
+        $this->user = User::whereNip($nip)->with(['attendancesIn', 'attendancesOut'])->firstOrFail();
+        $this->in = $this->user->attendancesIn;
+        $this->out = $this->user->attendancesOut;
     }
 
     public function render()

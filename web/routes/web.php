@@ -15,7 +15,10 @@ use App\Livewire\Office\CreateOffice;
 use App\Livewire\Office\EditOffice;
 use App\Livewire\Office\ListOffice;
 use App\Livewire\Office\ViewOffice;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+
+Carbon::setLocale('id');
 
 Route::middleware('guest')->group(function () {
     // Auth

@@ -59,6 +59,16 @@ class User extends Authenticatable
         return $this->hasMany(Attendance::class);
     }
 
+    public function attendancesIn()
+    {
+        return $this->hasMany(Attendance::class)->where('type', 'in')->orderBy('created_at', 'desc');
+    }
+
+    public function attendancesOut()
+    {
+        return $this->hasMany(Attendance::class)->where('type', 'out')->orderBy('created_at', 'desc');
+    }
+
     public function attendancesInToday(): HasMany
     {
         return $this->hasMany(Attendance::class)
