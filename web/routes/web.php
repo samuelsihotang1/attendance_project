@@ -18,8 +18,6 @@ use App\Livewire\Office\ViewOffice;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
-Carbon::setLocale('id');
-
 Route::middleware('guest')->group(function () {
     // Auth
     Route::get('/login', Login::class)->name('login');
