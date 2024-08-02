@@ -109,10 +109,13 @@
                                             <td>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <div class="wd-50 ht-50 rounded-2">
-                                                        <img src="{{url('assets/images/attendance/' . $user->attendancesInToday[0]->image)}}"
-                                                            alt="" class="img-fluid" />
+                                                        <a href="{{url('assets/images/attendance/' . $user->attendancesInToday[0]->image)}}"
+                                                            target="_blank">
+                                                            <img src="{{url('assets/images/attendance/' . $user->attendancesInToday[0]->image)}}"
+                                                                alt="" class="img-fluid" />
                                                         </a>
                                                     </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach

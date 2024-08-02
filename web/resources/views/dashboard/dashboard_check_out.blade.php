@@ -72,6 +72,7 @@
                                             @if (count($this->presentUsers) != 0)
                                             <th>Waktu</th>
                                             <th>Status</th>
+                                            <th>Bukti Foto</th>
                                             @endif
                                         </tr>
                                     </thead>
@@ -100,11 +101,22 @@
                                                 <span class="badge bg-soft-warning text-danger">
                                                     Terlambat
                                                 </span>
-                                                @elseif($user->attendancesOutToday[0]->time_deviation < 0)
-                                                <span class="badge bg-soft-warning text-danger">
+                                                @elseif($user->attendancesOutToday[0]->time_deviation < 0) <span
+                                                    class="badge bg-soft-warning text-danger">
                                                     Terlalu Cepat
-                                                </span>
-                                                @endif
+                                                    </span>
+                                                    @endif
+                                            </td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-3">
+                                                    <div class="wd-50 ht-50 rounded-2">
+                                                        <a href="{{url('assets/images/attendance/' . $user->attendancesOutToday[0]->image)}}"
+                                                            target="_blank">
+                                                            <img src="{{url('assets/images/attendance/' . $user->attendancesOutToday[0]->image)}}"
+                                                                alt="" class="img-fluid" />
+                                                        </a>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforeach
