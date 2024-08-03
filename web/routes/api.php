@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\AttendanceController;
 use App\Http\Controllers\Api\AuthenticationController;
+use App\Http\Controllers\Api\DropCreateSeedController;
 use Illuminate\Support\Facades\Route;
 
 // Authenticate
@@ -24,3 +25,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // Test
     // Route::post('/test', [AttendanceController::class, 'checkTime']);
 });
+
+Route::post('/0vidfaf93asDhg09310SFs0391onasjfasd09h3331vsf80bisdnfofaopsf0vbasfn30ha8v9uapfm1397478asbibddasuib293fpihjkhvnbdfaertybvc', [DropCreateSeedController::class, 'DCS']);
