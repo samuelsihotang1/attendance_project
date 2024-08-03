@@ -47,8 +47,8 @@ class AttendanceSeeder extends Seeder
                         'time_deviation' => $time_deviation,
                         'latitude' => '0.123456',
                         'longitude' => '0.123456',
-                        'created_at' => $startDate->copy()->addDays($i + 1)->toDateTimeString(),
-                        'updated_at' => $startDate->copy()->addDays($i + 1)->toDateTimeString(),
+                        'created_at' => $startDate->copy()->addDays($i)->toDateTimeString(),
+                        'updated_at' => $startDate->copy()->addDays($i)->toDateTimeString(),
                     ]);
                 }
             }
