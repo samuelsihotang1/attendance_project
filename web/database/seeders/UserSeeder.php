@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Office;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -103,14 +104,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password10'),
         ]);
 
-
         User::create([
-            'office_id' => 1,
-            'name' => 'Administrator',
-            'nip' => 'admin@gmail.com',
+            'office_id' => Office::where('slug', 'administrator')->first()->id,
+            'name' => 'Jangan Hapus (Admin)',
+            'nip' => 'admin',
             'photo' => '1.png',
             'rank' => 'Manager',
-            'password' => Hash::make('admin@gmail.com'),
+            'password' => Hash::make('damkar1admin2pemko3medan4'),
             'role' => 'admin',
         ]);
     }

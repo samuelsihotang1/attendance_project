@@ -15,7 +15,7 @@
                             <a class="btn btn-icon btn-light-brand" data-bs-toggle="dropdown" data-bs-offset="0, 10"
                                 data-bs-auto-close="outside">
                                 <i class="feather-filter me-2"></i>
-                                <span>{{ $this->my_office->name }}</span>
+                                <span class="text-truncate-1-line">{{ $this->my_office->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 @foreach ($this->offices as $office)
@@ -24,7 +24,7 @@
                                     {{$office->id == $this->my_office->id ? ' active' : ''}}
                                     ">
                                     <i class="feather-users me-3"></i>
-                                    <span>{{$office->name}}</span>
+                                    <span class="text-truncate-1-line">{{$office->name}}</span>
                                 </a>
                                 @endforeach
                             </div>

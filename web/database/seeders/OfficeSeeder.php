@@ -23,6 +23,7 @@ class OfficeSeeder extends Seeder
             ['name' => 'Office 8', 'slug' => 'office-8', 'address' => '505 Willow St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00', 'end_open' => '08:00', 'start_close' => '17:00', 'end_close' => '20:00'],
             ['name' => 'Office 9', 'slug' => 'office-9', 'address' => '606 Chestnut St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '08:00', 'end_open' => '08:00', 'start_close' => '17:00', 'end_close' => '20:00'],
             ['name' => 'Office 10', 'slug' => 'office-10', 'address' => '707 Fir St', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00', 'end_open' => '08:00', 'start_close' => '17:00', 'end_close' => '20:00'],
+            ['name' => 'Jangan Hapus (Kantor Admin)', 'slug' => 'administrator', 'address' => 'administrator', 'latitude' => '3.591903', 'longitude' => '98.676726', 'start_open' => '09:00', 'end_open' => '08:00', 'start_close' => '17:00', 'end_close' => '20:00'],
         ];
 
         foreach ($offices as $office) {
