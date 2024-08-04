@@ -4,7 +4,6 @@ import 'package:mobile/screen/announcement_screen.dart';
 import 'package:mobile/screen/attendance_screen.dart';
 import 'package:mobile/screen/home_screen.dart';
 import 'package:mobile/screen/login_screen.dart';
-import 'package:mobile/screen/take_photo_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {

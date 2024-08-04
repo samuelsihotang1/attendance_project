@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/service/api_service.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../style/color.dart';
 
 class LoginScreen extends StatefulWidget {

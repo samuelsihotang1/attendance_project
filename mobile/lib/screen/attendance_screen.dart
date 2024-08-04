@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile/model/response/attendance_record_data.dart';
 import 'package:mobile/service/api_service.dart';
 import 'package:intl/intl.dart';
-import '../model/announcement.dart';
-import '../model/announcement_response.dart';
 import 'package:mobile/style/color.dart';
-
-import '../model/attandance_data.dart';
-import '../model/attandance_data_response.dart';
 import '../model/response/attendance_record_response.dart';
 
 class AttendanceScreen extends StatefulWidget {

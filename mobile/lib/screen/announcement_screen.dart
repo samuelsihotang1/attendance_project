@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile/service/api_service.dart';
-
 import '../model/announcement.dart';
 import '../model/announcement_response.dart';
 import 'package:mobile/style/color.dart';
