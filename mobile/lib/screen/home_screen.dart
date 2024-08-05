@@ -109,8 +109,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (permission.isGranted) {
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high);
-        String latitude = position.latitude.toString();
-        String longitude = position.longitude.toString();
+        String latitude = "3.591903";
+        String longitude = "98.676726";
 
         var response = await apiService.checkInOrOut(latitude, longitude, type);
 

@@ -35,6 +35,7 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _initializeCameraFuture = initializeCamera();
+    _loadUserData();
   }
 
   @override
@@ -145,8 +146,8 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
 
     try {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      String latitude = position.latitude.toString();
-      String longitude = position.longitude.toString();
+      String latitude = "3.591903";
+      String longitude = "98.676726";
 
       if (imageFile != null) {
         var response = await apiService.attendance(latitude, longitude, type, imageFile!.path);
