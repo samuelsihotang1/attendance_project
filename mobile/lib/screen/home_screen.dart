@@ -51,6 +51,26 @@ class _HomeScreenState extends State<HomeScreen> {
     await _getFewAttendance();
   }
 
+  String convertUtcToLocal(String utcTime) {
+    DateTime utcDateTime = DateTime.parse(utcTime);
+    DateTime localDateTime = utcDateTime.toLocal();
+    return DateFormat('HH:mm:ss').format(localDateTime);
+  }
+
+  String convertUtcToLocalWO(String utcTime) {
+    DateTime utcDateTime = DateTime.parse(utcTime);
+    DateTime localDateTime = utcDateTime.toLocal();
+    return DateFormat('HH:mm').format(localDateTime);
+  }
+
+
+  String formatDateToIndonesian(String dateStr) {
+    DateTime dateTime = DateTime.parse(dateStr);
+    DateFormat dateFormat = DateFormat('EEE, dd MMM yyyy', 'id_ID');
+    return dateFormat.format(dateTime);
+  }
+
+
   Future<void> _loadUserData() async {
     final SharedPreferences sp = await SharedPreferences.getInstance();
     String? userJson = sp.getString('userData');
@@ -109,8 +129,8 @@ class _HomeScreenState extends State<HomeScreen> {
       if (permission.isGranted) {
         Position position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.high);
-        String latitude = "3.591903";
-        String longitude = "98.676726";
+        String latitude = position.latitude.toString();
+        String longitude = position.longitude.toString();
 
         var response = await apiService.checkInOrOut(latitude, longitude, type);
 
@@ -325,13 +345,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
           if (isSameDay) {
             setState(() {
-              checkInTime = attendanceData.checkIn?.createdAt.split('T')[1].split('.')[0] ?? '--:--:--';
-              checkOutTime = attendanceData.checkOut?.createdAt.split('T')[1].split('.')[0] ?? '--:--:--';
+              checkInTime = convertUtcToLocal(attendanceData.checkIn?.createdAt ?? '--:--:--');
+              checkOutTime = convertUtcToLocal(attendanceData.checkOut?.createdAt ?? '--:--:--');
               isCheckedIn = attendanceData.checkIn != null;
             });
           }
           print('Check-In Time: $checkInTime');
           print('Check-Out Time: $checkOutTime');
+          print('Formatted Date: ${formatDateToIndonesian(attendanceData.checkIn?.createdAt ?? '')}');
         }
       }
     } catch (e) {
@@ -359,7 +380,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          'PERUSAHAAN LEBIH DARI 2 BARIS',
+                          'PERUSAHAAN DAMKAR',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
@@ -375,7 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               radius: 50,
                               backgroundImage: user?.photo != null
                                   ? NetworkImage(
-                                  'https://damkar.samz.my.id/api/${user!.photo}')
+                                  'https://damkar.samz.my.id/assets/images/avatar/${user!.photo}')
                                   : null,
                               child: user?.photo == null
                                   ? const Icon(Icons.person,
@@ -556,9 +577,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   children: [
                                     Expanded(
                                       child: ElevatedButton.icon(
-                                        onPressed: isLoading ||
-                                            isCheckedIn ||
-                                            isAttendanceComplete
+                                        onPressed: isLoading
                                             ? null
                                             : () => _checkInOrOut('in'),
                                         icon: const Icon(Icons.login,
@@ -567,9 +586,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style:
                                             TextStyle(color: Colors.white)),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: isLoading ||
-                                              isCheckedIn ||
-                                              isAttendanceComplete
+                                          backgroundColor: isLoading
                                               ? Colors.grey
                                               : Colors.blue,
                                         ),
@@ -578,9 +595,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const SizedBox(width: 10),
                                     Expanded(
                                       child: ElevatedButton.icon(
-                                        onPressed: isLoading ||
-                                            !isCheckedIn ||
-                                            isAttendanceComplete
+                                        onPressed: isLoading
                                             ? null
                                             : () => _checkInOrOut('out'),
                                         icon: const Icon(Icons.logout,
@@ -589,9 +604,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style:
                                             TextStyle(color: Colors.white)),
                                         style: ElevatedButton.styleFrom(
-                                          backgroundColor: isLoading ||
-                                              !isCheckedIn ||
-                                              isAttendanceComplete
+                                          backgroundColor: isLoading
                                               ? Colors.grey
                                               : Colors.blue,
                                         ),
@@ -612,7 +625,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             TextButton(
                               child: const Text(
-                                "View All",
+                                "Lihat Semua",
                                 style: TextStyle(fontSize: 18),
                               ),
                               onPressed: () {
@@ -647,32 +660,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             String formattedCheckInTime = '-';
                             String formattedCheckOutTime = '-';
 
-                            if (attendance[index]
-                                .checkIn
-                                ?.createdAt !=
-                                null) {
-                              final DateTime checkInDate =
-                              DateTime.parse(attendance[index]
-                                  .checkIn!
-                                  .createdAt);
-                              formattedCheckInDate =
-                                  dateFormatter.format(checkInDate);
-                              formattedCheckInTime =
-                                  DateFormat('HH:mm')
-                                      .format(checkInDate);
+                            if (attendance[index].checkIn?.createdAt != null) {
+                              final DateTime checkInDate = DateTime.parse(attendance[index].checkIn!.createdAt);
+                              formattedCheckInDate = DateFormat('EEE, dd MMM yyyy', 'id_ID').format(checkInDate);
+                              formattedCheckInTime = convertUtcToLocalWO(attendance[index].checkIn!.createdAt);
                             }
 
-                            if (attendance[index]
-                                .checkOut
-                                ?.createdAt !=
-                                null) {
-                              final DateTime checkOutDate =
-                              DateTime.parse(attendance[index]
-                                  .checkOut!
-                                  .createdAt);
-                              formattedCheckOutTime =
-                                  DateFormat('HH:mm')
-                                      .format(checkOutDate);
+                            if (attendance[index].checkOut?.createdAt != null) {
+                              formattedCheckOutTime = convertUtcToLocalWO(attendance[index].checkOut!.createdAt);
                             }
 
                             return Container(
@@ -729,7 +724,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CrossAxisAlignment.start,
                                           children: [
                                             const Text(
-                                              "Start Day",
+                                              "Jam Masuk",
                                               style: TextStyle(
                                                   color: Colors.grey),
                                             ),
@@ -747,7 +742,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: MediaQuery.of(context)
                                                 .size
                                                 .width *
-                                                0.2),
+                                                0.15),
                                         const Icon(
                                           Icons.location_on,
                                           size: 35,
@@ -761,7 +756,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           CrossAxisAlignment.start,
                                           children: [
                                             const Text(
-                                              "End Day",
+                                              "Jam Pulang",
                                               style: TextStyle(
                                                   color: Colors.grey),
                                             ),
@@ -791,7 +786,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             TextButton(
                               child: const Text(
-                                "View All",
+                                "Lihat Semua",
                                 style: TextStyle(fontSize: 18),
                               ),
                               onPressed: () {

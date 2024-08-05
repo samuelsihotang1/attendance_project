@@ -67,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Text(
-                  'Login',
+                  'Masuk',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _nipController,
                           keyboardType: TextInputType.multiline,
                           decoration: InputDecoration(
-                            hintText: 'Enter Your NIP here',
+                            hintText: 'Masukkan NIP Pada Kotak ini',
                             prefixIcon: const Icon(Icons.person_outline),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
@@ -105,14 +105,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your NIP';
+                              return 'Mohon masukkan NIP anda';
                             }
                             return null;
                           },
                         ),
                         const SizedBox(height: 10),
                         const Text(
-                          'Password',
+                          'Kata Sandi',
                           style: TextStyle(
                             fontFamily: 'Poppins',
                             fontSize: 16,
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.visiblePassword,
                           obscureText: _obscureText,
                           decoration: InputDecoration(
-                            hintText: 'Enter Your Password here',
+                            hintText: 'Masukkan Kata Sandi Pada Kotak Ini',
                             prefixIcon: const Icon(Icons.lock_outline),
                             suffixIcon: IconButton(
                               icon: Icon(
@@ -141,14 +141,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return 'Mohon masukkan kata sandi anda';
                             }
                             return null;
                           },
                         ),
                         const SizedBox(height: 20),
                         _isLoading
-                            ? Center(child: CircularProgressIndicator())
+                            ? const Center(child: CircularProgressIndicator())
                             : SizedBox(
                           width: double.infinity,
                           height: 50,
@@ -161,7 +161,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             onPressed: _login,
-                            child: const Text('Login'),
+                            child: const Text('Masuk'),
                           ),
                         ),
                       ],

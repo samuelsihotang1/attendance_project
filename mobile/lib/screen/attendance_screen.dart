@@ -25,6 +25,12 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     _getAttendance();
   }
 
+  String convertUtcToLocalWO(String utcTime) {
+    DateTime utcDateTime = DateTime.parse(utcTime);
+    DateTime localDateTime = utcDateTime.toLocal();
+    return DateFormat('HH:mm').format(localDateTime);
+  }
+
   Future<void> _getAttendance() async {
     try {
       AttendanceRecordDataResponse? ar = await apiService.getAttendance();
@@ -79,19 +85,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             String formattedCheckOutTime = '-';
 
             if (attendance[index].checkIn?.createdAt != null) {
-              final DateTime checkInDate = DateTime.parse(
-                  attendance[index].checkIn!.createdAt);
-              formattedCheckInDate =
-                  dateFormatter.format(checkInDate);
-              formattedCheckInTime =
-                  DateFormat('HH:mm').format(checkInDate);
+              final DateTime checkInDate = DateTime.parse(attendance[index].checkIn!.createdAt);
+              formattedCheckInDate = DateFormat('EEE, dd MMM yyyy', 'id_ID').format(checkInDate);
+              formattedCheckInTime = convertUtcToLocalWO(attendance[index].checkIn!.createdAt);
             }
 
             if (attendance[index].checkOut?.createdAt != null) {
-              final DateTime checkOutDate = DateTime.parse(
-                  attendance[index].checkOut!.createdAt);
-              formattedCheckOutTime =
-                  DateFormat('HH:mm').format(checkOutDate);
+              formattedCheckOutTime = convertUtcToLocalWO(attendance[index].checkOut!.createdAt);
             }
             return Container(
               width: MediaQuery.of(context).size.width,
@@ -141,7 +141,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "Start Day",
+                              "Jam Masuk",
                               style:
                               TextStyle(color: Colors.grey),
                             ),
@@ -158,7 +158,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                             width: MediaQuery.of(context)
                                 .size
                                 .width *
-                                0.2),
+                                0.15),
                         const Icon(
                           Icons.location_on,
                           size: 35,
@@ -172,7 +172,7 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                           CrossAxisAlignment.start,
                           children: [
                             const Text(
-                              "End Day",
+                              "Jam Pulang",
                               style:
                               TextStyle(color: Colors.grey),
                             ),

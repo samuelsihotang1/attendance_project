@@ -146,8 +146,8 @@ class _TakePhotoScreenState extends State<TakePhotoScreen> with WidgetsBindingOb
 
     try {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      String latitude = "3.591903";
-      String longitude = "98.676726";
+      String latitude = position.latitude.toString();
+      String longitude = position.longitude.toString();
 
       if (imageFile != null) {
         var response = await apiService.attendance(latitude, longitude, type, imageFile!.path);
