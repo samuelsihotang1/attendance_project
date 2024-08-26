@@ -80,7 +80,7 @@ class EditOffice extends Component
             'longitude' => ['required', 'numeric', 'between:-180,180'],
             'start_open' => 'required|date_format:H:i',
             'end_open' => 'required|date_format:H:i|after:start_open',
-            'start_close' => 'required|date_format:H:i|after:end_open',
+            'start_close' => 'required|date_format:H:i',
             'end_close' => 'required|date_format:H:i|after:start_close',
         ];
     }
